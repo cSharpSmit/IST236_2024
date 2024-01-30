@@ -10,12 +10,14 @@ import {
   Modal,
   Image,
 } from "react-native";
+// Above are the components the app will be using
 
 export default function App() {
   // Declare state management variables
   const [userQuestion, setUserQuestion] = useState("");
-  const [modalIsVisible, setModalIsVisible] = useState(false);
-  const [appResponse, setAppResponse] = useState("");
+  const [modalIsVisible, setModalIsVisible] = useState(false);  // Controls modal visibility state
+  const [appResponse, setAppResponse] = useState("");          // Configures the apps response state
+  // Holds an array of responses that the 8 ball will give
   const responses = [
     "It is certain",
     "It is decidedly so",
@@ -39,31 +41,37 @@ export default function App() {
     "Very doubtful",
   ];
 
+  // Function used to set the modal screen to visible
   function startMagic8BallShakeHandler() {
-    setModalIsVisible(true);
+    setModalIsVisible(true);  // Sets the modal visibility state to true
   }
 
+  // Used to clear the modal state variables as well as setting
+  // its visibility state to false
   function endMagic8BallShakeHandler() {
     setModalIsVisible(false);
     setUserQuestion("");
     setAppResponse("");
   }
 
+  // Function to handle the pressing of the submission button
   function onSubmit() {
-    startMagic8BallShakeHandler();
-    const rndNum = Math.floor(Math.random() * responses.length);
-    const rndAnswer = responses[rndNum];
-    setAppResponse(rndAnswer);
+    startMagic8BallShakeHandler();   // Calls the function to set modal visibility state to true
+    const rndNum = Math.floor(Math.random() * responses.length);  // Creates a random number limited to the length of the responses array
+    const rndAnswer = responses[rndNum];  // Assigns the random number as the index position of the responses array state variable
+    setAppResponse(rndAnswer);    // Sets the setAppResponse state variable to the random answer (response) that was created
   }
-
+  // Returns or renders the app on the screen for user viewing and interaction
   return (
     <>
       <StatusBar styles="auto" />
       <SafeAreaView style={styles.rootContainer}>
+       {/* Configures the title */}
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Magic 8 Ball</Text>
         </View>
 
+        {/* Configures the image */}
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -71,6 +79,7 @@ export default function App() {
           />
         </View>
 
+        {/* Configures the enter your question label & its text input */}
         <Text style={styles.inputLabel}>Enter Your Question</Text>
         <TextInput
           style={styles.textInput}
@@ -79,6 +88,7 @@ export default function App() {
           value={userQuestion}
         ></TextInput>
 
+        {/* Configures the submit button pressable */}
         <View style={styles.submitButtonContainer}>
           <Pressable
             // Add the android ripple
@@ -92,22 +102,27 @@ export default function App() {
           </Pressable>
         </View>
 
+        {/* Configures the modal screen */}
         <Modal visible={modalIsVisible} animationType="slide">
           <SafeAreaView style={styles.rootContainer}>
+            {/* Configures the title on the modal screen */}
             <View style={styles.subtitleContainer}>
               <Text style={styles.subtitle}>Answer</Text>
             </View>
 
+            {/* Configures the question header & text label */}
             <View style={styles.questionContainer}>
               <Text style={styles.textLabel}>Question:</Text>
               <Text style={styles.question}>{userQuestion}</Text>
             </View>
 
+            {/* Configures the response header & text label */}
             <View style={styles.responseContainer}>
               <Text style={styles.textLabel}>Response:</Text>
               <Text style={styles.response}>{appResponse}</Text>
             </View>
 
+            {/* Configures the modal button pressable (Cancel Button) */}
             <View style={styles.modalButtonContainer}>
               <Pressable
                 // Add the android ripple
@@ -127,6 +142,7 @@ export default function App() {
   );
 }
 
+// Configures the styles for the app
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
