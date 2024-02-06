@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View, FlatList } from "react-native";
 
 import MovieItem from "./components/MovieItem";
+import ListHeaderComponent from './components/ListHeaderComponent'; // Imports the List header for use
 
 export default function App() {
   const [movieItems, setMovieItems] = useState([
@@ -72,6 +73,7 @@ export default function App() {
             showsVerticalScrollIndicator={false}
             data={movieItems}
             keyExtractor={(item) => item.name}
+            ListHeaderComponent={ListHeaderComponent}  // Calls the List Header Component
             renderItem={({ item }) => (
               <MovieItem
                 name={item.name}
@@ -89,22 +91,29 @@ export default function App() {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    backgroundColor: "#5bbe71",
+    backgroundColor: "#d80000",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 40,
+    paddingTop: 50,
   },
   titleContainer: {
     flex: 1,
     justifyContent: "center",
     marginBottom: 20,
-    paddingHorizontal: 5,
+    paddingHorizontal: 7,
     borderWidth: 5,
     borderRadius: 10,
+    backgroundColor: "#2B4254",
   },
   title: {
     fontSize: 35,
     fontWeight: "bold",
+    color: "#d80000",
+    textShadowColor: "black",
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 1,
+    transform: [{ perspective: 350 }, { rotateX: '15deg' }],
+    paddingHorizontal: 7
   },
   listContainer: {
     flex: 8,
