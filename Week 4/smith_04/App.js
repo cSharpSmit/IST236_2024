@@ -1,11 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View, FlatList } from "react-native";
+//  Importing components that will be utilized, Above   \\
 
-import MovieItem from "./components/MovieItem";
-import ListHeaderComponent from './components/ListHeaderComponent'; // Imports the List header for use
+//  Importing Custom components that will be utilized, Below   \\
+import MovieItem from "./components/MovieItem";     // Imports the Movie item component for use
+import ListHeaderComponent from './components/ListHeaderComponent'; // Imports the List header component for use
 
+// Defines The main App component
 export default function App() {
+   // State hook for managing the list of movies initial values set with a predefined movies
+   // Each movie item includes name, image, and rating properties
+   // "require" is used to include movie images from the assets directory
   const [movieItems, setMovieItems] = useState([
     {
       name: "The Place Beyond The Pines",
@@ -59,21 +65,32 @@ export default function App() {
     },
   ]);
 
+  // App Component UI \\
   return (
+    // React Fragment "<> </>" to group multiple elements without adding extra nodes to the DOM
     <>
-      <StatusBar style="dark" />
+    {/* Adjusts the status bar style for better visibility */}
+      <StatusBar style="dark" />  
+      {/* Safe area view to avoid overlaps with system UI elements */}
       <SafeAreaView style={styles.rootContainer}>
+        {/* Container for the app title */}
         <View style={styles.titleContainer}>
+          {/* Text for the app title */}
           <Text style={styles.title}>My Top 10 Movies</Text>
         </View>
 
         <View style={styles.listContainer}>
           <FlatList
+            // Disables overscroll or "scroll bounce" effect for a cleaner UI experience
             overScrollMode="never"
-            showsVerticalScrollIndicator={false}
+            // Hides the vertical scroll indicator (hides scroll bar)
+            showsVerticalScrollIndicator={false}  
+            // Data source for the list of movies
             data={movieItems}
+            // Defines unique keys for each list item based on movie name
             keyExtractor={(item) => item.name}
-            ListHeaderComponent={ListHeaderComponent}  // Calls the List Header Component
+            ListHeaderComponent={ListHeaderComponent}  // Rendering a custom component for the list header
+            // Function to render each movie item using the MovieItem component
             renderItem={({ item }) => (
               <MovieItem
                 name={item.name}
@@ -88,6 +105,7 @@ export default function App() {
   );
 }
 
+// Stylesheet object used for all the styles used by the App component
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
