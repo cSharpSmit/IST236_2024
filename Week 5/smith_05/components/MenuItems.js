@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import Colors from "../constants/colors";
+// ^^ Imports components for use ^^ \\
 
+// Defines a functional component "MenuItem" that takes props (properties) as its parameter
+// This component is used to display a menu item, including its name, image, and price
 function MenuItem(props) {
   return (
     <View style={styles.itemContainer}>
@@ -17,8 +20,10 @@ function MenuItem(props) {
   );
 }
 
+// Exports the component for modular use
 export default MenuItem;
 
+// Style sheet for the menu items
 const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: 20,

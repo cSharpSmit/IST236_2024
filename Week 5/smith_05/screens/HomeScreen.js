@@ -3,13 +3,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Title from "../components/Title";
 import NavButton from "../components/NavButton";
 import Colors from "../constants/colors";
+// ^^ Imports components for use ^^ \\
 
+// HomeScreen function component for displaying the home screen of the app
+// It includes the restaurant's name, an image, contact info, and a navigation button to view the menu
 function HomeScreen(props) {
   // Set Safe Area Screen Boundaries
   const insets = useSafeAreaInsets();
 
   return (
     <View
+      // Applies dynamic padding to ensure content respects the safe area of the device screen
       style={[
         styles.rootContainer,
         {
@@ -20,10 +24,12 @@ function HomeScreen(props) {
         },
       ]}
     >
+      {/* Title container displaying the restaurant's name using a custom "Title" component */}
       <View style={styles.titleContainer}>
         <Title>Drunken Jacks</Title>
       </View>
 
+      {/* Image container with a restaurant image */}
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -31,6 +37,8 @@ function HomeScreen(props) {
         />
       </View>
 
+      {/* Info container displaying contact information and links
+      Includes clickable phone number, address, and website URL */}
       <View style={styles.infoContainer}>
         <Text
           style={styles.infoText}
@@ -52,6 +60,7 @@ function HomeScreen(props) {
         </Text>
       </View>
 
+      {/* Button container with a "NavButton" component to navigate to the menu screen */}
       <View style={styles.buttonContainer}>
         <NavButton onPress={props.onNext}>View Menu</NavButton>
       </View>
@@ -59,8 +68,10 @@ function HomeScreen(props) {
   );
 }
 
+// Exports the component for modular use
 export default HomeScreen;
 
+// Style sheet for the home screen
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,

@@ -4,11 +4,17 @@ import { useState } from "react";
 import NavButton from "../components/NavButton";
 import Title from "../components/Title";
 import MenuItem from "../components/MenuItems";
+// ^^ Imports components for use ^^ \\
 
+// MenuScreen function component for displaying the menu screen of the app
+// It showcases a list of menu items, including their names, images, and prices,
+// And provides navigation back to the home screen
 function MenuScreen(props) {
   // Set Safe Area Screen Boundaries
   const insets = useSafeAreaInsets();
 
+  // State to manage the list of menu items
+  // Each item has a name, image, price, and unique id
   const [menuItems, setMenuItems] = useState([
     {
       name: "Scallops & Shrimp",
@@ -44,6 +50,7 @@ function MenuScreen(props) {
 
   return (
     <View
+      // Applies dynamic padding to ensure content respects the safe area of the device screen
       style={[
         styles.rootContainer,
         {
@@ -54,10 +61,12 @@ function MenuScreen(props) {
         },
       ]}
     >
+      {/* Title container for the menu screen */}
       <View style={styles.titleContainer}>
         <Title style={styles.title}>Menu</Title>
       </View>
 
+      {/* Container for the list of menu items. Uses "FlatList" for efficient rendering */}
       <View style={styles.listContainer}>
         <FlatList
             data={menuItems}
@@ -76,6 +85,7 @@ function MenuScreen(props) {
         />
       </View>
 
+      {/* Navigation button to go back to the home screen */}
       <View style={styles.buttonContainer}>
         <NavButton onPress={props.onNext}>Home</NavButton>
       </View>
@@ -83,12 +93,14 @@ function MenuScreen(props) {
   );
 }
 
+// Exports the component for modular use
 export default MenuScreen;
 
+// Style sheet for the menu screen
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    // Check menuitem.js image style
+    // Check menuitem.js image style note to self
     width: "100%",
     alignItems: "center",
   },
@@ -98,7 +110,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 7,
-    // Check menuitem.js image style
+    // Check menuitem.js image style note to self
     width: "95%",
   },
   buttonContainer: {

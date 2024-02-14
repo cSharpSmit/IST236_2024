@@ -1,6 +1,10 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import Colors from "../constants/colors";
+// ^^ Imports components for use ^^ \\
 
+
+// Defines a functional component "NavButton" that takes props (properties) as its parameter
+// This component creates a pressable button, typically used for navigation purposes
 function NavButton(props) {
   return (
     <Pressable android_ripple={{ color: "grey", foreground: true, }} onPress={props.onPress} style={styles.buttonContainer}>
@@ -11,8 +15,10 @@ function NavButton(props) {
   );
 }
 
+// Exports the component for modular use
 export default NavButton;
 
+// Style sheet for the nav buttons
 const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
