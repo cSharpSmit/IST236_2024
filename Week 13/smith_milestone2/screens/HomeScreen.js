@@ -17,16 +17,18 @@ const HomeScreen = (props) => {
   // console.log(props.route);
   const [plantOfTheDay, setPlantOfTheDay] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { ids, addFavorite, removeFavorite } = useContext(BookmarksContext);
+  const { bookmarkedPlants, addFavorite, removeFavorite } = useContext(BookmarksContext);
 
-  // Determine if the current plant is bookmarked
-  const plantIsBookmarked = ids.includes(plantOfTheDay?.id);
+  // Check if the current plant is bookmarked by looking for its ID in the array of bookmarked plants
+  const plantIsBookmarked = bookmarkedPlants.some(plant => plant.id === plantOfTheDay?.id);
 
   const changeBookmarkStatusHandler = () => {
     if (plantIsBookmarked) {
+      // When removing, you only need the plant's ID
       removeFavorite(plantOfTheDay.id);
     } else {
-      addFavorite(plantOfTheDay.id);
+      // When adding, you pass the full plant object
+      addFavorite(plantOfTheDay);
     }
   };
 

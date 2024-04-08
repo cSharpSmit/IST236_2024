@@ -15,17 +15,19 @@ import ListItem from "./ListItem";
 function List(props) {
   // renderListItem function and return statement
   function renderListItem(itemData) {
-    const newsItemProps = {
+    const plantItemProps = {
       id: itemData.item.id,
-      headline: itemData.item.headline,
-      date: itemData.item.date,
-      author: itemData.item.author,
-      agency: itemData.item.agency,
-      imageUrl: itemData.item.imageUrl,
-      description: itemData.item.description,
+      commonName: itemData.item.common_name,
+      scientificName: itemData.item.scientific_name,
+      family: itemData.item.family,
+      familyCommonName: itemData.item.family_common_name,
+      genus: itemData.item.genus,
+      imageUrl: itemData.item.image_url,
+      description: itemData.item.description, // TODO: Pass a description
       listIndex: itemData.index,
     };
-    return <ListItem {...newsItemProps} />;
+    console.log("List Plant ID", itemData.item.id);
+    return <ListItem {...plantItemProps} />;
   }
 
   return (

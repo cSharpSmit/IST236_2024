@@ -2,48 +2,81 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 /**
- * ListItem component represents a single news article in a list view.
- * It displays an image, headline, and publishing information of an article.
- * 
+ * ListItem component represents a single plant in a list view.
+ * It displays an image and the common name of the plant.
+ * Additional details like the scientific name and a brief description are also shown.
+ *
  * Props:
- * - id: Identifier for the news item, used for navigation.
- * - imageUrl: URL for the news item image.
- * - headline: Title text of the news item.
- * - author: Name of the author of the news item.
- * - agency: Publishing agency of the news item.
- * - date: Publication date of the news item.
- * - listIndex: Index of the news item in the list, used for alternate background colors.
- * 
- * When pressed, the component navigates to the detailed view of the news article.
+ * - id: Identifier for the plant, used for navigation.
+ * - imageUrl: URL for the plant image.
+ * - commonName: Common name of the plant.
+ * - scientificName: Scientific name of the plant.
+ * - description: A brief description of the plant.
+ * - listIndex: Index of the plant item in the list, used for alternate background colors.
+ *
+ * When pressed, the component navigates to the detailed view of the plant.
  * The listIndex prop is used to style every other item with a different background.
  */
 
-function ListItem(props) {
+// TODO: Pass a description
+function ListItem({
+  id,
+  imageUrl,
+  commonName,
+  scientificName,
+  family,
+  familyCommonName,
+  genus,
+  listIndex,
+}) {
+  console.log("List Item Plant ID: ", id);
+
+  console.log("List Item Plant Common Name: ", commonName);
+
   // Component logic and return statement
   const navigation = useNavigation();
 
-    function selectedNewsHandler() {
-      navigation.navigate("PlantsDetail", {
-        newsId: props.id,
-      });
-    }
+  // Construct the plant object from props
+  const plantObject = {
+    id,
+    imageUrl,
+    commonName,
+    scientificName,
+    family,
+    familyCommonName,
+    genus,
+    description,
+  };
+
+  // Dynamically generate the description
+  const description = `Discover today's featured plant: ${
+    commonName || "a mysterious plant"
+  }, scientifically known as ${scientificName}. This remarkable species belongs to the ${
+    family || "unknown"
+  } family${genus ? ` and the ${genus} genus.` : "."}`;
+
+  // Adds the generated description to the plantObject
+  plantObject.description = description;
+
+  function selectedPlantHandler() {
+    navigation.navigate("PlantsDetail", { plant: plantObject });
+  }
 
   return (
     <View
       style={[
         styles.itemContainer,
-        { backgroundColor: props.listIndex % 2 == 0 ? "#ccc" : "#fff" },
+        { backgroundColor: listIndex % 2 === 0 ? "#ccc" : "#fff" },
       ]}
     >
-      <Pressable onPress={selectedNewsHandler}>
+      <Pressable onPress={selectedPlantHandler}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{ uri: props.imageUrl }} />
+          <Image style={styles.image} source={{ uri: imageUrl }} />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.headline}>{props.headline.toLocaleString()}</Text>
-          <Text style={styles.publishInfo}>
-            {props.author} | {props.agency} | {props.date} 
-            
+          <Text style={styles.commonName}>{commonName}</Text>
+          <Text style={styles.plantInfo}>
+            {family} | {genus} | {scientificName}
           </Text>
         </View>
       </Pressable>
@@ -66,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    height: 300
+    height: 300,
   },
   image: {
     height: "100%",
@@ -75,18 +108,18 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
   },
-  headline: {
+  commonName: {
     fontSize: 30,
     fontFamily: "newsreader",
     fontWeight: "bold",
     paddingBottom: 5,
-    paddingHorizontal: 11
+    paddingHorizontal: 11,
   },
-  publishInfo: {
+  plantInfo: {
     fontSize: 15,
     fontFamily: "newsreader",
-    paddingBottom: 5
+    paddingBottom: 5,
   },
 });

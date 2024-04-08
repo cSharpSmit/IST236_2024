@@ -1,28 +1,54 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const BookmarksContext = createContext({
-  ids: [],
-  addFavorite: (id) => {},
-  removeFavorite: (id) => {},
+  bookmarkedPlants: [],
+  addFavorite: (plant) => {},
+  removeFavorite: (plantId) => {},
 });
 
 function BookmarksContextProvider({ children }) {
-  const [bookmarkIds, setBookmarkIds] = useState([]);
+  const [bookmarkedPlants, setBookmarkedPlants] = useState([]);
 
-  function addFavoriteBookmark(id) {
-    setBookmarkIds((currentBookmarkIds) => {
-      return [...currentBookmarkIds, id];
-    });
-  }
+  useEffect(() => {
+    // Load the bookmarked plants from AsyncStorage when the app starts
+    const loadBookmarkedPlants = async () => {
+      const storedPlants = await AsyncStorage.getItem("bookmarkedPlants");
+      if (storedPlants) {
+        const plants = JSON.parse(storedPlants);
+        setBookmarkedPlants(plants);
+        setBookmarkedPlants(JSON.parse(storedPlants));
+        console.log('Loaded bookmarked plants:', plants); // Log the retrieved list
+      }
+    };
 
-  function removeFavoriteBookmark(id) {
-    setBookmarkIds((currentBookmarkIds) => {
-      return [...currentBookmarkIds.filter((bookId) => bookId != id)];
-    });
-  }
+    loadBookmarkedPlants();
+  }, []);
+
+  const addFavoriteBookmark = async (plant) => {
+    const newBookmarkedPlants = [...bookmarkedPlants, plant];
+    setBookmarkedPlants(newBookmarkedPlants);
+    await AsyncStorage.setItem(
+      "bookmarkedPlants",
+      JSON.stringify(newBookmarkedPlants)
+    );
+    console.log("Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
+  };
+
+  const removeFavoriteBookmark = async (plantId) => {
+    const newBookmarkedPlants = bookmarkedPlants.filter(
+      (p) => p.id !== plantId
+    );
+    setBookmarkedPlants(newBookmarkedPlants);
+    await AsyncStorage.setItem(
+      "bookmarkedPlants",
+      JSON.stringify(newBookmarkedPlants)
+    );
+    console.log("Remove Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
+  };
 
   const value = {
-    ids: bookmarkIds,
+    bookmarkedPlants,
     addFavorite: addFavoriteBookmark,
     removeFavorite: removeFavoriteBookmark,
   };

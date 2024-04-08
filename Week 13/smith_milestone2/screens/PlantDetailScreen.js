@@ -22,57 +22,56 @@ import { BookmarksContext } from "../store/context/bookmarks-context";
  */
 
 function PlantDetailScreen(props) {
+
+  console.log("Plant Detail: ", props.route.params);
+
   // Component setup, including state, effects, and layout definitions
-  const bookmarkedNewsCtx = useContext(BookmarksContext);
+  const { bookmarkedPlants, addFavorite, removeFavorite } =
+    useContext(BookmarksContext);
 
-  const newsId = props.route.params.newsId;
-  const selectedNews = NEWS.find((news) => news.id === newsId);
+  // Gets the entire plant object as a route param (May need to adjust)
+  const plant = props.route.params.plant;
 
-  const newsIsBookmarked = bookmarkedNewsCtx.ids.includes(newsId);
+  // Determine if the plant is bookmarked
+  const plantIsBookmarked = bookmarkedPlants.some(
+    (bookmarkedPlant) => bookmarkedPlant.id === plant.id
+  );
 
   function changeBookmarkStatusHandler() {
-    if (newsIsBookmarked) {
-      bookmarkedNewsCtx.removeFavorite(newsId);
+    if (plantIsBookmarked) {
+      removeFavorite(plant.id);
     } else {
-      bookmarkedNewsCtx.addFavorite(newsId);
+      addFavorite(plant);
     }
   }
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
-      title: "",
-      headerRight: () => {
-        return (
-          <BookmarkButton
-            pressed={newsIsBookmarked}
-            onPress={changeBookmarkStatusHandler}
-          />
-        );
-      },
+      title: plant.commonName || plant.scientificName, // Show common name if available, else scientific
+      headerRight: () => (
+        <BookmarkButton
+          pressed={plantIsBookmarked}
+          onPress={changeBookmarkStatusHandler}
+        />
+      ),
     });
-  }, [props.navigation, changeBookmarkStatusHandler]);
+  }, [props.navigation, plantIsBookmarked, plant]);
 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{ uri: selectedNews.imageUrl }}
-        />
+        <Image style={styles.image} source={{ uri: plant.imageUrl }} />
       </View>
       <ScrollView style={styles.scrollContainer}>
-      <View style={styles.infoContainer}>
-        <Text style={styles.headline}>
-          {selectedNews.headline.toLocaleString()}
-        </Text>
-        <Text style={styles.publishInfo}>
-          {selectedNews.date} | {selectedNews.author} | {" "}
-          {selectedNews.agency}
-        </Text>
-        <Text style={styles.description}>
-            {selectedNews.description}
-        </Text>
-      </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.headline}>
+            {plant.commonName}
+          </Text>
+          <Text style={styles.publishInfo}>
+            {plant.family} | {plant.genus} | {plant.scientificName}
+          </Text>
+          <Text style={styles.description}>{plant.description}</Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary500o8,
     flex: 1,
     alignItems: "center",
-    paddingBottom: 145
+    paddingBottom: 145,
   },
   headline: {
     color: Colors.primary300,
@@ -129,6 +128,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "newsreader",
     lineHeight: 30,
-    paddingBottom: 15
-  }
+    paddingBottom: 15,
+  },
 });

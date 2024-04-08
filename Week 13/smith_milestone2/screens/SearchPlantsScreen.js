@@ -31,7 +31,7 @@ const SearchPlantScreen = () => {
       />
       <Button title="Search" onPress={searchPlants} />
 
-      {/* Optionally show a loading indicator here */}
+      {/* Could show a loading indicator here */}
 
       <FlatList
         data={plants}
