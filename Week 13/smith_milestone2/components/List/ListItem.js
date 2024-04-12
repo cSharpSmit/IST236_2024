@@ -29,9 +29,9 @@ function ListItem({
   genus,
   listIndex,
 }) {
-  console.log("List Item Plant ID: ", id);
+  // console.log("List Item Plant ID: ", id);
 
-  console.log("List Item Plant Common Name: ", commonName);
+  // console.log("List Item Plant Common Name: ", commonName);
 
   // Component logic and return statement
   const navigation = useNavigation();

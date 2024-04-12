@@ -18,7 +18,7 @@ function BookmarksContextProvider({ children }) {
         const plants = JSON.parse(storedPlants);
         setBookmarkedPlants(plants);
         setBookmarkedPlants(JSON.parse(storedPlants));
-        console.log('Loaded bookmarked plants:', plants); // Log the retrieved list
+        // console.log('Loaded bookmarked plants:', plants); // Log the retrieved list
       }
     };
 

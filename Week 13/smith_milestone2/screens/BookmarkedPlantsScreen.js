@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { useContext } from "react";
 import { BookmarksContext } from "../store/context/bookmarks-context";
-import ListItem from "../components/List/ListItem";
 import List from "../components/List/List";
 import Colors from "../constants/colors";
 
@@ -17,7 +16,7 @@ function BookmarkedPlantsScreen() {
       </View>
     );
   } else {
-    console.log("Bookmarked Plants", bookmarkedPlants);
+    // console.log("Bookmarked Plants", bookmarkedPlants);
     return <List items={bookmarkedPlants} />;
   }
 }

@@ -39,10 +39,15 @@ const HomeScreen = (props) => {
 
   const fetchPlantOfTheDay = async () => {
     setIsLoading(true);
+
+    const totalPages = 100; // Total pages to select from (The pages go higher but this will do)
+    const randomPage = Math.floor(Math.random() * totalPages) + 1; // Generate a random page number
+
+    
     try {
       // Replace uses Trefle API key
       const response = await fetch(
-        "https://trefle.io/api/v1/plants/?token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E"
+        `https://trefle.io/api/v1/plants/?token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E&page=${randomPage}`
       );
       const data = await response.json();
 

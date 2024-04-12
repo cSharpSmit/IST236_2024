@@ -1,5 +1,7 @@
 import { View, StyleSheet, FlatList } from "react-native";
+import { useContext, useEffect } from "react";
 import ListItem from "./ListItem";
+import { SettingsContext } from "../../store/context/settings-context";
 
 /**
  * List component handles the rendering of a list of news articles.
@@ -13,27 +15,51 @@ import ListItem from "./ListItem";
  */
 
 function List(props) {
+  const { settings } = useContext(SettingsContext);
+
+  console.log("Show Image Only: ", settings.showImagesOnly);
+
+  // Filter items based on settings
+  const filteredData = props.items.filter((item) => {
+    if (settings.showImagesOnly && !item.image_url) {
+      // console.log("Common Name", item.common_name, " Image Url: ", item.image_url);
+      return false; // Skip plants without images if the setting is enabled
+    }
+    if (settings.showCommonNamesOnly && !item.common_name) {
+      return false; // Skip plants without common names if the setting is enabled
+    }
+    // console.log("Common Name", item.common_name, " Image Url: ", item.image_url);
+    return true; // Include the plant if none of the above conditions apply
+  });
+
+  // Use useEffect to pass the count back to the parent
+  useEffect(() => {
+    if (props.onCountChange) {
+      props.onCountChange(filteredData.length);  // Call the callback with the count of filtered items
+    }
+  }, [filteredData.length, props.onCountChange]);  // Depend on filteredData.length and props.onCountChange
+
   // renderListItem function and return statement
-  function renderListItem(itemData) {
+  function renderListItem(filteredData) {
     const plantItemProps = {
-      id: itemData.item.id,
-      commonName: itemData.item.common_name,
-      scientificName: itemData.item.scientific_name,
-      family: itemData.item.family,
-      familyCommonName: itemData.item.family_common_name,
-      genus: itemData.item.genus,
-      imageUrl: itemData.item.image_url,
-      description: itemData.item.description, // TODO: Pass a description
-      listIndex: itemData.index,
+      id: filteredData.item.id,
+      commonName: filteredData.item.common_name,
+      scientificName: filteredData.item.scientific_name,
+      family: filteredData.item.family,
+      familyCommonName: filteredData.item.family_common_name,
+      genus: filteredData.item.genus,
+      imageUrl: filteredData.item.image_url,
+      description: filteredData.item.description, // TODO: Pass a description
+      listIndex: filteredData.index,
     };
-    console.log("List Plant ID", itemData.item.id);
+    // console.log("List Plant ID", filteredData.item.id);
     return <ListItem {...plantItemProps} />;
   }
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={props.items}
+        data={filteredData}
         keyExtractor={(item) => item.id}
         renderItem={renderListItem}
         showsVerticalScrollIndicator={false}
@@ -50,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "black"
+    backgroundColor: "black",
   },
   backgroundImage: {
     opacity: 0.1,

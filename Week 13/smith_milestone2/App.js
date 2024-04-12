@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BookmarkedPlantsScreen from "./screens/BookmarkedPlantsScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SearchPlantsByImageScreen from "./screens/SearchPlantsByImageScreen";
 import SearchPlantsScreen from "./screens/SearchPlantsScreen";
@@ -17,9 +18,11 @@ import {
   Entypo,
   MaterialCommunityIcons,
   Foundation,
+  Feather,
 } from "@expo/vector-icons";
 import { useCallback } from "react";
 import BookmarksContextProvider from "./store/context/bookmarks-context";
+import { SettingsContextProvider } from "./store/context/settings-context";
 
 // Entry point for the Expo news app, setting up fonts, splash screen, and navigation
 
@@ -72,6 +75,17 @@ function DrawerNavigator() {
           ),
         }}
       />
+      <Drawer.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: "Settings",
+          drawerLabel: "Settings",
+          drawerIcon: ({ color, size }) => (
+            <Feather name="settings" size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -103,7 +117,11 @@ function TabsNavigator() {
         options={{
           headerShown: true,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="greenhouse" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="greenhouse"
+              size={size}
+              color={color}
+            />
           ),
           tabBarLabel: "Home",
         }}
@@ -125,7 +143,11 @@ function TabsNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons  name="image-search" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="image-search"
+              size={size}
+              color={color}
+            />
           ),
           tabBarLabel: "Search Image",
         }}
@@ -136,7 +158,7 @@ function TabsNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Foundation  name="trees" size={size} color={color} />
+            <Foundation name="trees" size={size} color={color} />
           ),
           tabBarLabel: "View By Category",
         }}
@@ -167,33 +189,35 @@ export default function App() {
     return (
       <>
         <StatusBar style="light" />
-        <BookmarksContextProvider>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="DrawerScreen"
-              screenOptions={{
-                headerTintColor: Colors.primary300,
-                headerStyle: { backgroundColor: Colors.primary500 },
-                contentStyle: { backgroundColor: "black" },
-              }}
-            >
-              <Stack.Screen
-                name="DrawerScreen"
-                component={DrawerNavigator}
-                options={{
-                  headerShown: false,
+        <SettingsContextProvider>
+          <BookmarksContextProvider>
+            <NavigationContainer>
+              <Stack.Navigator
+                initialRouteName="DrawerScreen"
+                screenOptions={{
+                  headerTintColor: Colors.primary300,
+                  headerStyle: { backgroundColor: Colors.primary500 },
+                  contentStyle: { backgroundColor: "black" },
                 }}
-              />
-              <Stack.Screen
-                name="PlantsDetail"
-                component={PlantDetailScreen}
-                options={{
-                  headerBackTitleVisible: false,
-                }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </BookmarksContextProvider>
+              >
+                <Stack.Screen
+                  name="DrawerScreen"
+                  component={DrawerNavigator}
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="PlantsDetail"
+                  component={PlantDetailScreen}
+                  options={{
+                    headerBackTitleVisible: false,
+                  }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </BookmarksContextProvider>
+        </SettingsContextProvider>
       </>
     );
   }
