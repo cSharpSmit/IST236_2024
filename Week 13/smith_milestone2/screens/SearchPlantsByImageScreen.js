@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, Alert, Image } from "react-native";
+import { View, Text, Button, StyleSheet, Alert, Image, ScrollView } from "react-native";
 import {
   launchImageLibraryAsync,
   launchCameraAsync,
@@ -7,6 +7,10 @@ import {
   requestMediaLibraryPermissionsAsync,
   requestCameraPermissionsAsync,
 } from "expo-image-picker";
+
+// TODO: I could change the project from all to some
+// geographic relevance like north-america or add an option
+// in settings for using GPS, or all
 
 function SearchPlantsByImageScreen() {
   const [imageUri, setImageUri] = useState(null);
@@ -78,12 +82,17 @@ function SearchPlantsByImageScreen() {
     });
     formData.append("organs", "flower");
 
+    // ^^ TODO: Organs associated to images ^^
+    // (must contains one of: leaf, flower, fruit, bark, auto. Could contains: habit, other)
+    // [max 5 organs and organs.length must be equal to images.length]
+
     const apiKey = "2b1092F63PQqCxu002O7Fp8u0"; // API key
     const project = "all"; // Project in Pl@ntNet
+    const relatedImagesParam = "&include-related-images=true"; // parameter for returning related images
 
     try {
       const response = await fetch(
-        `https://my-api.plantnet.org/v2/identify/${project}?api-key=${apiKey}`,
+        `https://my-api.plantnet.org/v2/identify/${project}?api-key=${apiKey}${relatedImagesParam}`,
         {
           method: "POST",
           headers: {
@@ -99,17 +108,18 @@ function SearchPlantsByImageScreen() {
       const result = JSON.parse(textResponse); // Parses the JSON response
 
       if (!response.ok) {
-        throw new Error(`API Error: ${response.status} - ${result.message || 'No specific error message.'}`);
+        throw new Error(
+          `API Error: ${response.status} - ${
+            result.message || "No specific error message."
+          }`
+        );
       }
 
       console.log("API Response:", result); // Log the full response from the API
       setPlantInfo(result);
     } catch (error) {
       console.error("Error identifying the plant:", error);
-      Alert.alert(
-        "Error",
-        "Failed to identify the plant. Please try again."
-      );
+      Alert.alert("Error", "Failed to identify the plant. Please try again.");
     }
   }
 
@@ -123,24 +133,22 @@ function SearchPlantsByImageScreen() {
           <Button
             title="Identify Plant"
             onPress={identifyPlant}
-            isLoading={isLoading}
+            // isLoading={isLoading}
           />
         </View>
       )}
-      {plantInfo && plantInfo.results.length > 0 && (
-        <View style={styles.infoContainer}>
-          <Text style={styles.title}>
-            Top Match: {plantInfo.results[0].species.scientificName}
-          </Text>
-          <Text>
-            Common Names: {plantInfo.results[0].species.commonNames.join(", ")}
-          </Text>
-          <Text>
-            Family: {plantInfo.results[0].species.family.scientificName}
-          </Text>
-          <Text>Score: {plantInfo.results[0].score.toFixed(2)}</Text>
-        </View>
-      )}
+      <ScrollView style={styles.scrollView}>
+        {plantInfo && plantInfo.results.map((result, index) => (
+          <View key={index} style={styles.resultContainer}>
+            <Text style={styles.info}>Scientific Name: {result.species.scientificName}</Text>
+            <Text style={styles.info}>Score: {result.score.toFixed(2)}</Text>
+            <Text style={styles.info}>Common Names: {result.species.commonNames.join(", ")}</Text>
+            {result.images && result.images.map((image, idx) => (
+              <Image key={idx} source={{ uri: image.url.m }} style={styles.resultImage} />
+            ))}
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -159,39 +167,24 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
   },
+  scrollView: {
+    width: '100%',
+  },
+  resultContainer: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
   image: {
     width: 200,
     height: 200,
   },
-  infoContainer: {
-    marginTop: 20,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
+  resultImage: {
+    width: 150,
+    height: 150,
+    marginTop: 10,
   },
   info: {
-    marginTop: 20,
+    marginTop: 5,
     textAlign: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginVertical: 10,
-  },
-  // resultItem: {
-  //   marginBottom: 10,
-  //   padding: 10,
-  //   borderWidth: 1,
-  //   borderColor: "#ccc",
-  //   borderRadius: 5,
-  // },
-  // commonName: {
-  //   fontSize: 18,
-  //   color: "#333",
-  // },
-  // scientificName: {
-  //   fontSize: 16,
-  //   fontStyle: "italic",
-  // },
 });
