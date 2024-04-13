@@ -19,6 +19,13 @@ export const PLANT_CATEGORIES = [
     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.andersonexpeditions.com%2Fwp-content%2Fuploads%2F2019%2F01%2Flaunching-niassa-and-angola.jpg&f=1&nofb=1&ipt=3b2e696b146f072282f21089257eb16165159c501992ac5068726fd54553dcab&ipo=images"
   ),
   // new PlantCategory(
+  //   2,  // Id
+  //   "Yemen Plants", 
+  //   "Yemen Plants", 
+  //   "distributions/24/plants?", // It seems using the API distribution ID works as well, but it had duplicate results 
+  //   "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.andersonexpeditions.com%2Fwp-content%2Fuploads%2F2019%2F01%2Flaunching-niassa-and-angola.jpg&f=1&nofb=1&ipt=3b2e696b146f072282f21089257eb16165159c501992ac5068726fd54553dcab&ipo=images"
+  // ),
+  // new PlantCategory(
   //   ,
   //   "Tallest Trees",
   //   "Tallest Trees",

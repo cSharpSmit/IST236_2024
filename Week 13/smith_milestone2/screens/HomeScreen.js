@@ -7,20 +7,28 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
+  Button,
 } from "react-native";
 import Colors from "../constants/colors";
 // Import the BookmarksContext and button
 import BookmarkButton from "../components/BookmarkButton";
 import { BookmarksContext } from "../store/context/bookmarks-context";
+import AddToGardenButton from "../components/AddToGardenButton";
+import { MyGardenContext } from "../store/context/my-garden-context";
 
 const HomeScreen = (props) => {
   // console.log(props.route);
   const [plantOfTheDay, setPlantOfTheDay] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { bookmarkedPlants, addFavorite, removeFavorite } = useContext(BookmarksContext);
+  const { bookmarkedPlants, addFavorite, removeFavorite } =
+    useContext(BookmarksContext);
+  const { myGardensPlants, addToGarden, removeFromGarden } =
+    useContext(MyGardenContext);
 
   // Check if the current plant is bookmarked by looking for its ID in the array of bookmarked plants
-  const plantIsBookmarked = bookmarkedPlants.some(plant => plant.id === plantOfTheDay?.id);
+  const plantIsBookmarked = bookmarkedPlants.some(
+    (plant) => plant.id === plantOfTheDay?.id
+  );
 
   const changeBookmarkStatusHandler = () => {
     if (plantIsBookmarked) {
@@ -30,6 +38,22 @@ const HomeScreen = (props) => {
       console.log("Bookmarked Plant of the Day: ", plantOfTheDay);
       // When adding, you pass the full plant object
       addFavorite(plantOfTheDay);
+    }
+  };
+
+  // Check if the current plant exist in my garden by looking for its ID in the array of my gardens plants
+  const plantExistGarden = myGardensPlants.some(
+    (plant) => plant.id === plantOfTheDay?.id
+  );
+
+  const changeGardenStatusHandler = () => {
+    if (plantExistGarden) {
+      // When removing, you only need the plant's ID
+      removeFromGarden(plantOfTheDay.id);
+    } else {
+      console.log("Added Plant of the Day to Garden: ", plantOfTheDay);
+      // When adding, pass the full plant object
+      addToGarden(plantOfTheDay);
     }
   };
 
@@ -44,7 +68,6 @@ const HomeScreen = (props) => {
     const totalPages = 100; // Total pages to select from (The pages go higher but this will do)
     const randomPage = Math.floor(Math.random() * totalPages) + 1; // Generate a random page number
 
-    
     try {
       // Replace uses Trefle API key
       const response = await fetch(
@@ -66,9 +89,12 @@ const HomeScreen = (props) => {
   // Dynamically setting the navigation options
   useLayoutEffect(() => {
     props.navigation.setOptions({
-      title: plantOfTheDay?.common_name || "Plant of the Day",
-      headerTitleStyle: styles.plantCommonName,
-      headerStyle: styles.headerStyle,
+      // title: plantOfTheDay?.common_name || "Plant of the Day",
+      headerStyle: styles.headerContainer,
+      headerTitleAlign: "center",
+      headerTitle: "Plant of the Day",
+      headerTitleStyle: styles.headerTitle,
+
       headerRight: () => (
         <BookmarkButton
           pressed={plantIsBookmarked}
@@ -77,7 +103,6 @@ const HomeScreen = (props) => {
       ),
     });
   }, [props.navigation, plantIsBookmarked, plantOfTheDay]);
-  
 
   if (isLoading) {
     return (
@@ -125,9 +150,17 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollContainer}>
-        <Text style={styles.plantCommonName}>
-          {plantOfTheDay.common_name || "Unknown Plant"}
-        </Text>
+        <View style={styles.commonNameContainer}>
+          <Text style={styles.plantCommonName}>
+            {plantOfTheDay.common_name || "Unknown Plant"}
+          </Text>
+          <View style={styles.gardenButtonContainer}>
+            <AddToGardenButton
+              pressed={plantExistGarden}
+              onPress={changeGardenStatusHandler}
+            />
+          </View>
+        </View>
 
         <View style={styles.imageContainer}>
           <Image
@@ -162,22 +195,40 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  headerStyle: {
-    // backgroundColor: Colors.primary300,
+  headerContainer: {
+    backgroundColor: Colors.accent900,
+  },
+  headerTitle: {
+    // backgroundColor: Colors.accent200,
+    color: Colors.accent200,
+    fontSize: 30,
+    fontFamily: "newsreader",
+    fontWeight: "bold",
+    color: Colors.accent200,
   },
   scrollContainer: {
     flex: 1,
     // backgroundColor: Colors.primary300,
   },
+  commonNameContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 8,
+  },
   plantCommonName: {
+    flex: 1,
     textAlign: "center",
     fontSize: 30,
     fontFamily: "newsreader",
     fontWeight: "bold",
-    marginBottom: 8,
     color: Colors.accent200,
     paddingBottom: 5,
-    paddingHorizontal: 11,
+    // paddingHorizontal: 11,
+  },
+  gardenButtonContainer: {
+    alignSelf: "center",
   },
   imageContainer: {
     height: 500,

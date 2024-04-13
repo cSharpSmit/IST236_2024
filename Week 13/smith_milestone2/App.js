@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BookmarkedPlantsScreen from "./screens/BookmarkedPlantsScreen";
+import MyGardensPlantsScreen from "./screens/MyGardensPlantsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SearchPlantsByImageScreen from "./screens/SearchPlantsByImageScreen";
@@ -22,6 +23,7 @@ import {
 } from "@expo/vector-icons";
 import { useCallback } from "react";
 import BookmarksContextProvider from "./store/context/bookmarks-context";
+import MyGardenContextProvider from "./store/context/my-garden-context";
 import { SettingsContextProvider } from "./store/context/settings-context";
 import PlantCategoryDetailScreen from "./screens/PlantCategoryDetailScreen";
 
@@ -74,6 +76,17 @@ function DrawerNavigator() {
           drawerLabel: "Saved Plants",
           drawerIcon: ({ color, size }) => (
             <Entypo name="bookmark" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="MyGardensPlants"
+        component={MyGardensPlantsScreen}
+        options={{
+          title: "My Gardens Plants",
+          drawerLabel: "My Gardens Plants",
+          drawerIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-assistant" size={size} color={color} />
           ),
         }}
       />
@@ -210,31 +223,33 @@ export default function App() {
         <StatusBar style="light" />
         <SettingsContextProvider>
           <BookmarksContextProvider>
-            <NavigationContainer>
-              <Stack.Navigator
-                initialRouteName="DrawerScreen"
-                screenOptions={{
-                  headerTintColor: Colors.primary300,
-                  headerStyle: { backgroundColor: Colors.primary500 },
-                  contentStyle: { backgroundColor: "black" },
-                }}
-              >
-                <Stack.Screen
-                  name="DrawerScreen"
-                  component={DrawerNavigator}
-                  options={{
-                    headerShown: false,
+            <MyGardenContextProvider>
+              <NavigationContainer>
+                <Stack.Navigator
+                  initialRouteName="DrawerScreen"
+                  screenOptions={{
+                    headerTintColor: Colors.primary300,
+                    headerStyle: { backgroundColor: Colors.primary500 },
+                    contentStyle: { backgroundColor: "black" },
                   }}
-                />
-                <Stack.Screen
-                  name="PlantsDetail"
-                  component={PlantDetailScreen}
-                  options={{
-                    headerBackTitleVisible: false,
-                  }}
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
+                >
+                  <Stack.Screen
+                    name="DrawerScreen"
+                    component={DrawerNavigator}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="PlantsDetail"
+                    component={PlantDetailScreen}
+                    options={{
+                      headerBackTitleVisible: false,
+                    }}
+                  />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </MyGardenContextProvider>
           </BookmarksContextProvider>
         </SettingsContextProvider>
       </>
