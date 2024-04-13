@@ -1,24 +1,47 @@
-import List from "../components/List/List";
-import { NEWS } from "../data/dummy_data";
+import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import PlantCategoryTile from "../components/CategoryGridTile";
+import PLANT_CATEGORIES from "../data/plant_data";
 
-/**
- * MMANewsScreen renders a list of MMA-related news articles.
- * It filters the NEWS dataset for articles specifically marked as 'MMANews',
- * ensuring that only content relevant to Mixed Martial Arts is displayed.
- * 
- * This component demonstrates a pattern similar to other news category screens,
- * focusing on a specific subject area by filtering the global news dataset.
- */
+function SearchPlantsByCategoryScreen({ navigation }) {
+  const renderPlantCategoryItem = ({ item }) => (
+    <PlantCategoryTile
+      name={item.name}
+      imageUrl={item.imageUrl}
+      onPress={() =>
+        navigation.navigate("PlantCategoryDetail", {
+          categoryId: item.id,
+          categoryType: item.type,
+          categoryAPIParam: item.apiParam,
+        })
+      }
+    />
+  );
 
-function  SearchPlantsByCategoryScreen() {
-  // Component logic: filtering NEWS by 'MMANews' type and rendering the filtered list
-  const type = "MMANews";
-  const displayedNews = NEWS.filter((newsItem) => {
-    return newsItem.type === type;
-  });
-
-  return <List items={displayedNews} />;
+  return (
+    <FlatList
+      data={PLANT_CATEGORIES}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={renderPlantCategoryItem}
+      numColumns={2} // Adjust number of columns here
+    />
+  );
 }
 
 // Exports screen component for use
 export default SearchPlantsByCategoryScreen;
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    flexDirection: "row",
+    padding: 10,
+    alignItems: "center",
+  },
+  image: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  text: {
+    fontWeight: "bold",
+  },
+});

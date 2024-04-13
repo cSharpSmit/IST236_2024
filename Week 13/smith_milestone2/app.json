@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/news-splash.jpg",
+      "image": "./assets/images/plant-seeker-splash-screen.jpg",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },

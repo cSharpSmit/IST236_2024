@@ -5,8 +5,8 @@ export const SettingsContext = createContext();
 
 export const SettingsContextProvider = ({ children }) => {
   const [settings, setSettings] = useState({
-    showImagesOnly: false,
-    showCommonNamesOnly: false,
+    showImagesOnly: true,
+    showCommonNamesOnly: true,
   });
   
   useEffect(() => {

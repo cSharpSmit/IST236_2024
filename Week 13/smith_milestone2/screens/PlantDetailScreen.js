@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { useState, useLayoutEffect, useContext } from "react";
-import { NEWS } from "../data/dummy_data";
 import BookmarkButton from "../components/BookmarkButton";
 import Colors from "../constants/colors";
 import { BookmarksContext } from "../store/context/bookmarks-context";

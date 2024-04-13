@@ -23,12 +23,14 @@ import {
 import { useCallback } from "react";
 import BookmarksContextProvider from "./store/context/bookmarks-context";
 import { SettingsContextProvider } from "./store/context/settings-context";
+import PlantCategoryDetailScreen from "./screens/PlantCategoryDetailScreen";
 
 // Entry point for the Expo news app, setting up fonts, splash screen, and navigation
 
 // Navigation stacks and styles
 const Stack = createNativeStackNavigator(); // Stack navigator for individual screens
 const Drawer = createDrawerNavigator(); // Drawer navigator for app sections
+const CategoryStack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator(); // Bottom tab navigator for main categories
 
 // Configures the drawer navigator with custom styles and routes
@@ -87,6 +89,23 @@ function DrawerNavigator() {
         }}
       />
     </Drawer.Navigator>
+  );
+}
+
+function CategoryNavigator() {
+  return (
+    <CategoryStack.Navigator>
+      <CategoryStack.Screen
+        name="SearchPlantsByCategory"
+        component={SearchPlantsByCategoryScreen}
+        options={{ headerShown: false }}
+      />
+      <CategoryStack.Screen
+        name="PlantCategoryDetail"
+        component={PlantCategoryDetailScreen}
+        options={{ headerShown: true }}
+      />
+    </CategoryStack.Navigator>
   );
 }
 
@@ -153,8 +172,8 @@ function TabsNavigator() {
         }}
       />
       <Tabs.Screen
-        name="SearchPlantsByCategory"
-        component={SearchPlantsByCategoryScreen}
+        name="ViewPlantsByCategory"
+        component={CategoryNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
