@@ -28,7 +28,7 @@ function CategoryGridTile(props) {
               Colors.primary800o5,  // Starts with darker blue
               "rgba(68, 83, 88, 0.1)",
               "rgba(68, 83, 88, 0.1)",
-              Colors.primary300,  // Middle is a transparent blue
+              Colors.accent900,  // Middle is a transparent blue
               "rgba(68, 83, 88, 0.1)",
               "rgba(68, 83, 88, 0.1)",
               Colors.primary800o5,  // Ends with darker blue

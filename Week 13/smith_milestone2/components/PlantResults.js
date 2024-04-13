@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
+import List from "../components/List/List";
 
 function PlantResults({ apiParam }) {
   const [plants, setPlants] = useState([]);
@@ -21,13 +22,10 @@ function PlantResults({ apiParam }) {
     setIsLoading(true); // Start loading indicator
     const apiKey = "-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E"; // Trefle API key
     const url = `https://trefle.io/api/v1/${apiParam}token=${apiKey}`; // Construct the API URL
-    const testURL = `https://trefle.io/api/v1/distributions/ang/plants?token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E`;
 
-    //https://trefle.io/api/v1/distributions/ang/plants?token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E
-
-    console.log("Requesting URL:", testURL); // Log the request URL to debug it
+    console.log("Requesting URL:", url); // Log the request URL to debug it
     try {
-      const response = await fetch(testURL); // Make the HTTP request
+      const response = await fetch(url); // Make the HTTP request
       const textResponse = await response.text(); // Get the response as text
 
       console.log("Raw API Response:", textResponse); // Log the raw response for debugging
@@ -55,20 +53,7 @@ function PlantResults({ apiParam }) {
     return <Text>No plants found for this category.</Text>;
   }
 
-  return (
-    <FlatList
-      data={plants}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <View style={styles.plantItem}>
-          <Image source={{ uri: item.image_url }} style={styles.image} />
-          <Text style={styles.text}>
-            {item.common_name || item.scientific_name}
-          </Text>
-        </View>
-      )}
-    />
-  );
+  return <List items={plants} />; // Uses the custom List component
 }
 
 export default PlantResults;
