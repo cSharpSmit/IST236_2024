@@ -32,7 +32,7 @@ function BookmarksContextProvider({ children }) {
       "bookmarkedPlants",
       JSON.stringify(newBookmarkedPlants)
     );
-    console.log("Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
+    // console.log("Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
   };
 
   const removeFavoriteBookmark = async (plantId) => {
@@ -44,7 +44,7 @@ function BookmarksContextProvider({ children }) {
       "bookmarkedPlants",
       JSON.stringify(newBookmarkedPlants)
     );
-    console.log("Remove Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
+    // console.log("Remove Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
   };
 
   const value = {

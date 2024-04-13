@@ -17,7 +17,7 @@ import { SettingsContext } from "../../store/context/settings-context";
 function List(props) {
   const { settings } = useContext(SettingsContext);
 
-  console.log("Show Image Only: ", settings.showImagesOnly);
+  // console.log("Show Image Only: ", settings.showImagesOnly);
 
   // Filter items based on settings
   const filteredData = props.items.filter((item) => {
@@ -41,14 +41,17 @@ function List(props) {
 
   // renderListItem function and return statement
   function renderListItem(filteredData) {
+
+    // console.log(filteredData.item.imageUrl);
+
     const plantItemProps = {
       id: filteredData.item.id,
-      commonName: filteredData.item.common_name,
-      scientificName: filteredData.item.scientific_name,
+      commonName: filteredData.item.common_name || filteredData.item.commonName,
+      scientificName: filteredData.item.scientific_name || filteredData.item.scientificName,
       family: filteredData.item.family,
-      familyCommonName: filteredData.item.family_common_name,
+      familyCommonName: filteredData.item.family_common_name || filteredData.item.familyCommonName,
       genus: filteredData.item.genus,
-      imageUrl: filteredData.item.image_url,
+      imageUrl: filteredData.item.image_url || filteredData.item.imageUrl,
       description: filteredData.item.description, // TODO: Pass a description
       listIndex: filteredData.index,
     };

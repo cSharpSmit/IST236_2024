@@ -22,8 +22,7 @@ import { BookmarksContext } from "../store/context/bookmarks-context";
  */
 
 function PlantDetailScreen(props) {
-
-  console.log("Plant Detail: ", props.route.params);
+  // console.log("Plant Detail: ", props.route.params);
 
   // Component setup, including state, effects, and layout definitions
   const { bookmarkedPlants, addFavorite, removeFavorite } =
@@ -31,6 +30,8 @@ function PlantDetailScreen(props) {
 
   // Gets the entire plant object as a route param (May need to adjust)
   const plant = props.route.params.plant;
+
+  // console.log("Selected Plant: ", props.route.params.plant);
 
   // Determine if the plant is bookmarked
   const plantIsBookmarked = bookmarkedPlants.some(
@@ -41,6 +42,7 @@ function PlantDetailScreen(props) {
     if (plantIsBookmarked) {
       removeFavorite(plant.id);
     } else {
+      console.log("Bookmarked Searched Plant: ", props.route.params.plant);
       addFavorite(plant);
     }
   }
@@ -64,9 +66,7 @@ function PlantDetailScreen(props) {
       </View>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.infoContainer}>
-          <Text style={styles.headline}>
-            {plant.commonName}
-          </Text>
+          <Text style={styles.headline}>{plant.commonName}</Text>
           <Text style={styles.publishInfo}>
             {plant.family} | {plant.genus} | {plant.scientificName}
           </Text>

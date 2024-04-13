@@ -27,6 +27,7 @@ const HomeScreen = (props) => {
       // When removing, you only need the plant's ID
       removeFavorite(plantOfTheDay.id);
     } else {
+      console.log("Bookmarked Plant of the Day: ", plantOfTheDay);
       // When adding, you pass the full plant object
       addFavorite(plantOfTheDay);
     }
@@ -66,6 +67,8 @@ const HomeScreen = (props) => {
   useLayoutEffect(() => {
     props.navigation.setOptions({
       title: plantOfTheDay?.common_name || "Plant of the Day",
+      headerTitleStyle: styles.plantCommonName,
+      headerStyle: styles.headerStyle,
       headerRight: () => (
         <BookmarkButton
           pressed={plantIsBookmarked}
@@ -148,19 +151,23 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center',
-    // backgroundColor: "black"
+    // backgroundColor: Colors.primary300,
     paddingHorizontal: 5,
     paddingTop: 5,
     // marginBottom: 10,
-    borderRadius: 7,
+    // borderRadius: 7,
   },
   centered: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
+  headerStyle: {
+    // backgroundColor: Colors.primary300,
+  },
   scrollContainer: {
     flex: 1,
+    // backgroundColor: Colors.primary300,
   },
   plantCommonName: {
     textAlign: "center",
