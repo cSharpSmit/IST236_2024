@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import PlantCategoryTile from "../components/CategoryGridTile";
 import PLANT_CATEGORIES from "../data/plant_data";
 
@@ -22,7 +22,7 @@ function SearchPlantsByCategoryScreen({ navigation }) {
       data={PLANT_CATEGORIES}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderPlantCategoryItem}
-      numColumns={2} // Adjust number of columns here
+      numColumns={2} // Adjust number of columns here if need later
     />
   );
 }

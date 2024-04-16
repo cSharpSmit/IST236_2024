@@ -11,6 +11,9 @@ import {
 // TODO: I could change the project from all to some
 // geographic relevance like north-america or add an option
 // in settings for using GPS, or all
+// NOTE: Apparently many absent results are
+// Come from certain request due to incomplete data sets
+// Used by the API.
 
 function SearchPlantsByImageScreen() {
   const [imageUri, setImageUri] = useState(null);

@@ -27,7 +27,7 @@ import MyGardenContextProvider from "./store/context/my-garden-context";
 import { SettingsContextProvider } from "./store/context/settings-context";
 import PlantCategoryDetailScreen from "./screens/PlantCategoryDetailScreen";
 
-// Entry point for the Expo news app, setting up fonts, splash screen, and navigation
+// Entry point for the Expo Plant Seeker app, setting up fonts, splash screen, and navigation, etc
 
 // Navigation stacks and styles
 const Stack = createNativeStackNavigator(); // Stack navigator for individual screens

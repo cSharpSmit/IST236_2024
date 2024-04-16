@@ -25,13 +25,13 @@ function CategoryGridTile(props) {
         >
           <LinearGradient
             colors={[
-              Colors.primary800o5,  // Starts with darker blue
+              Colors.primary800o5,  
               "rgba(68, 83, 88, 0.1)",
               "rgba(68, 83, 88, 0.1)",
-              Colors.accent900,  // Middle is a transparent blue
+              Colors.accent900,  
               "rgba(68, 83, 88, 0.1)",
               "rgba(68, 83, 88, 0.1)",
-              Colors.primary800o5,  // Ends with darker blue
+              Colors.primary800o5,  
             ]}
             style={styles.innerContainer}
           >

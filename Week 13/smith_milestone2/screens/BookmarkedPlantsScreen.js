@@ -1,11 +1,9 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useContext } from "react";
 import { BookmarksContext } from "../store/context/bookmarks-context";
 import List from "../components/List/List";
 import Colors from "../constants/colors";
 
-
-// Place holder code for the bookmarked news screen
 function BookmarkedPlantsScreen() {
   const { bookmarkedPlants } = useContext(BookmarksContext);
 

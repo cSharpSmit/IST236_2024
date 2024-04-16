@@ -3,6 +3,11 @@ import { useContext } from "react";
 import { SettingsContext } from "../store/context/settings-context";
 import Colors from "../constants/colors";
 
+// NOTE: This page was an after thought considering
+// How many results had incomplete data.
+// TODO: Ensure settings take effect for every screen.
+// Unless its for a certain screen.
+
 const SettingsScreen = () => {
   const { settings, saveSettings } = useContext(SettingsContext);
 

@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  View,
   Text,
-  FlatList,
-  Image,
   StyleSheet,
   ActivityIndicator,
 } from "react-native";

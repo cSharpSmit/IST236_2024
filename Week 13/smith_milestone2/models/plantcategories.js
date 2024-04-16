@@ -13,5 +13,5 @@ class PlantCategories {
   }
 }
 
-// Export the PlantCategory model so it can be used elsewhere in your app
+// Export the PlantCategory model
 export default PlantCategories;

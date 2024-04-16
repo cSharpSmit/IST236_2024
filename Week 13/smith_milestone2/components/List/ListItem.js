@@ -1,6 +1,10 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+// TODO: Update comments and allow component to be
+// Used with data from more than just the Trefle API
+// If needed.
+
 /**
  * ListItem component represents a single plant in a list view.
  * It displays an image and the common name of the plant.

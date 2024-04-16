@@ -3,16 +3,11 @@ import { useContext, useEffect } from "react";
 import ListItem from "./ListItem";
 import { SettingsContext } from "../../store/context/settings-context";
 
-/**
- * List component handles the rendering of a list of news articles.
- * It uses FlatList for efficient scrolling and rendering of a potentially long list of items.
- * Each item is rendered using the ListItem component.
- *
- * Props:
- * - items: An array of news article objects to be displayed in the list.
- *
- * The FlatList component is configured to not show the vertical scroll indicator for aesthetic purposes.
- */
+// TODO: Ensure to refine the list to accept and manage
+// Plants from the Pl@nt API as well.
+// Dynamically change the structure of the render method
+// Depending on the screen and API will utilize the custom
+// List component.
 
 function List(props) {
   const { settings } = useContext(SettingsContext);

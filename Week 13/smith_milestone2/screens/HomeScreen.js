@@ -1,4 +1,3 @@
-// HomeScreen.js
 import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import {
   View,
@@ -10,7 +9,6 @@ import {
   Button,
 } from "react-native";
 import Colors from "../constants/colors";
-// Import the BookmarksContext and button
 import BookmarkButton from "../components/BookmarkButton";
 import { BookmarksContext } from "../store/context/bookmarks-context";
 import AddToGardenButton from "../components/AddToGardenButton";
@@ -32,11 +30,11 @@ const HomeScreen = (props) => {
 
   const changeBookmarkStatusHandler = () => {
     if (plantIsBookmarked) {
-      // When removing, you only need the plant's ID
+      // When removing, we only need the plant's ID
       removeFavorite(plantOfTheDay.id);
     } else {
       console.log("Bookmarked Plant of the Day: ", plantOfTheDay);
-      // When adding, you pass the full plant object
+      // When adding, pass the full plant object
       addFavorite(plantOfTheDay);
     }
   };
@@ -48,7 +46,7 @@ const HomeScreen = (props) => {
 
   const changeGardenStatusHandler = () => {
     if (plantExistGarden) {
-      // When removing, you only need the plant's ID
+      // When removing, we only need the plant's ID
       removeFromGarden(plantOfTheDay.id);
     } else {
       console.log("Added Plant of the Day to Garden: ", plantOfTheDay);

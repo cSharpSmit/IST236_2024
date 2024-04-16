@@ -1,24 +1,10 @@
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import { useState, useLayoutEffect, useContext } from "react";
+import { useLayoutEffect, useContext } from "react";
 import BookmarkButton from "../components/BookmarkButton";
 import Colors from "../constants/colors";
 import { BookmarksContext } from "../store/context/bookmarks-context";
 
-/**
- * NewsDetailScreen displays detailed information about a selected news article.
- * It retrieves the article based on the passed `newsId` prop and displays its content,
- * including an image, headline, publication info, and full description.
- *
- * Props:
- * - route: Contains parameters passed to this screen, including `newsId` to identify the selected news article.
- * - navigation: Allows for navigation and setting options on the navigation header.
- *
- * State:
- * - pressed: Tracks the bookmark button's state (bookmarked or not).
- *
- * The screen layout includes an image at the top, followed by a scrollable view containing the news article's details.
- * A bookmark button is dynamically rendered in the navigation header, allowing users to bookmark the article.
- */
+
 
 function PlantDetailScreen(props) {
   // console.log("Plant Detail: ", props.route.params);
