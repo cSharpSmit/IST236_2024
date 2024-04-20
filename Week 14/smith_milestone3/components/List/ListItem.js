@@ -56,7 +56,7 @@ function ListItem({
   };
 
   // Dynamically generate the description
-  const description = `Discover about the matched plant: ${
+  const description = `Discover about this plant: ${
     commonName || "a mysterious plant"
   }, scientifically known as ${scientificName}. This remarkable species belongs to the ${
     family || "unknown"

@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import { useContext, useEffect } from "react";
 import ListItem from "./ListItem";
 import { SettingsContext } from "../../store/context/settings-context";
@@ -74,6 +74,7 @@ function List(props) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.resultNumber}>{filteredData.length} results found</Text>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}
@@ -93,6 +94,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "black",
+  },
+  resultNumber: {
+    fontWeight: "bold",
+    color: "white"
   },
   backgroundImage: {
     opacity: 0.1,

@@ -1,13 +1,5 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Alert,
-  Image,
-  ScrollView,
-} from "react-native";
+import { View, Text, Button, StyleSheet, Alert, Image } from "react-native";
 import {
   launchImageLibraryAsync,
   launchCameraAsync,
@@ -29,6 +21,7 @@ function SearchPlantsByImageScreen(props) {
   const [imageUri, setImageUri] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [plantInfo, setPlantInfo] = useState(null);
+  const [searchPerformed, setSearchPerformed] = useState(false); // State to track if a search has been made
 
   useEffect(() => {
     getPermissions();
@@ -37,8 +30,8 @@ function SearchPlantsByImageScreen(props) {
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerStyle: styles.headerContainer,
-      headerTitleAlign: 'center',
-      headerTitle: 'Search By Image',
+      headerTitleAlign: "center",
+      headerTitle: "Search By Image",
       headerTitleStyle: styles.headerTitle,
       // headerRight: () => (
       //   <Button onPress={() => console.log('Header button pressed!')} title="Info" />
@@ -80,7 +73,7 @@ function SearchPlantsByImageScreen(props) {
   }
 
   async function takePhoto() {
-    let result = await ImagePicker.launchCameraAsync({
+    let result = await launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -149,11 +142,12 @@ function SearchPlantsByImageScreen(props) {
           return {
             id: `${index}`, // Ensure unique id
             imageUrl: item.images?.[0]?.url.m, // Medium size image
-            images: item.images.map(img => img.url.m), // Map all medium size images
+            images: item.images.map((img) => img.url.m), // Map all medium size images
             commonName: item.species.commonNames.join(", "),
             scientificName: item.species.scientificName,
             family: item.species.family?.scientificName || "Unknown family",
-            familyAuthorship: item.species.family?.scientificNameAuthorship || "",
+            familyAuthorship:
+              item.species.family?.scientificNameAuthorship || "",
             genus: item.species.genus?.scientificName || "Unknown genus",
             genusAuthorship: item.species.genus?.scientificNameAuthorship || "",
             fromImageSearch: true, // Flag indicating data origin
@@ -164,24 +158,39 @@ function SearchPlantsByImageScreen(props) {
       console.error("Error identifying the plant:", error);
       Alert.alert("Error", "Failed to identify the plant. Please try again.");
     }
+    setSearchPerformed(true); // Mark that a search has been performed
     setIsLoading(false);
+  }
+
+  function clearSearch() {
+    setPlantInfo(null); // Clear the plant information
+    setSearchPerformed(false); // Reset the search flag
+    setImageUri(null);
   }
 
   return (
     <View style={styles.container}>
+      {searchPerformed && (
+        <View style={styles.clearButtonContainer}>
+          <Button title="X" onPress={clearSearch} />
+        </View>
+      )}
       {imageUri && (
         <View style={styles.previewContainer}>
           <Image source={{ uri: imageUri }} style={styles.image} />
         </View>
       )}
-      <Button title="Pick an Image from Gallery" onPress={pickImage} />
-      <Button title="Take a Photo" onPress={takePhoto} />
-
-      <Button
-        title="Identify Plant"
-        onPress={identifyPlant}
-        disabled={isLoading}
-      />
+      {!searchPerformed && (
+        <View style={styles.buttonContainer}>
+          <Button title="Pick an Image from Gallery" onPress={pickImage} />
+          <Button title="Take a Photo" onPress={takePhoto} />
+          <Button
+            title="Identify Plant"
+            onPress={identifyPlant}
+            disabled={isLoading}
+          />
+        </View>
+      )}
       {isLoading ? (
         <Text>Loading...</Text>
       ) : (
@@ -199,7 +208,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     // justifyContent: "center",
-    padding: 20,
+    // padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
     backgroundColor: Colors.primary300,
   },
   headerContainer: {
@@ -213,18 +224,28 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.accent200,
   },
+  clearButtonContainer: {
+    position: "absolute",
+    top: 10, // Adjust the distance from the top
+    right: 10, // Position in the top-right corner
+  },
   previewContainer: {
+    flexDirection: "row",
     marginTop: 20,
     alignItems: "center",
     paddingBottom: 10,
   },
-  resultContainer: {
-    marginBottom: 20,
-    alignItems: "center",
-  },
   image: {
     width: 150,
     height: 150,
+  },
+  buttonContainer: {
+    paddingTop: 20,
+    alignItems: "center",
+  },
+  resultContainer: {
+    marginBottom: 20,
+    alignItems: "center",
   },
   resultImage: {
     width: 150,
