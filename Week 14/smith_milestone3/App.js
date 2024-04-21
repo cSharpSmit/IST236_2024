@@ -115,7 +115,7 @@ function CategoryNavigator() {
       <CategoryStack.Screen
         name="SearchPlantsByCategory"
         component={SearchPlantsByCategoryScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
       />
       <CategoryStack.Screen
         name="PlantCategoryDetail"
@@ -192,11 +192,7 @@ function TabsNavigator() {
         name="ViewPlantsByCategory"
         component={CategoryNavigator}
         options={{
-          headerShown: true,
-          headerStyle: styles.headerContainer,
-          headerTitleAlign: 'center',
-          headerTitle: 'View By Category',
-          headerTitleStyle: styles.headerTitle,
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Foundation name="trees" size={size} color={color} />
           ),
@@ -272,9 +268,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  headerContainer: {
-    backgroundColor: Colors.accent900,
   },
   headerTitle: {
     // backgroundColor: Colors.accent200,

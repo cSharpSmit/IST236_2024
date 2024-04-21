@@ -32,7 +32,14 @@ const SearchPlantScreen = (props) => {
         `https://trefle.io/api/v1/plants/search?token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E&q=${query}`
       );
       const data = await response.json();
-      setPlants(data.data);
+
+      // Add the flag to indicate data source
+      const plantsWithFlag = data.data.map((plant) => ({
+        ...plant,
+        fromSearchPlants: true, // Flag indicating data is from SearchPlantsScreen
+      }));
+
+      setPlants(plantsWithFlag);
     } catch (error) {
       console.error("Error fetching search results:", error);
     } finally {

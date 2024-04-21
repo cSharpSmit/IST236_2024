@@ -66,15 +66,27 @@ function List(props) {
       description: filteredData.item.description, // TODO: Pass a description
       fromImageSearch: filteredData.item.fromImageSearch,
       images: filteredData.item.images,
+      fromCategorySearch: filteredData.item.fromCategorySearch,
       listIndex: filteredData.index,
     };
     // console.log("List Plant ID", filteredData.item.id);
     return <ListItem {...plantItemProps} />;
   }
 
+  // This section checks if any item has `fromSearchPlants` undefined or false
+  const shouldDisplayResultNumber = filteredData.some(
+    (item) =>
+      item.fromSearchPlants === false || item.fromSearchPlants === undefined
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.resultNumber}>{filteredData.length} results found</Text>
+      {/* Display the result count only if it's not from search plants screen */}
+      {shouldDisplayResultNumber && (
+        <Text style={styles.resultNumber}>
+          {filteredData.length} results found
+        </Text>
+      )}
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}
@@ -97,7 +109,7 @@ const styles = StyleSheet.create({
   },
   resultNumber: {
     fontWeight: "bold",
-    color: "white"
+    color: "white",
   },
   backgroundImage: {
     opacity: 0.1,

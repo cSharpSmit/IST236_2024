@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-} from "react-native";
+import { Text, StyleSheet, ActivityIndicator } from "react-native";
 import List from "../components/List/List";
 
-function PlantResults({ apiParam }) {
+function PlantResults({ apiParam, fromCategorySearch = false }) {
   const [plants, setPlants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,7 +30,11 @@ function PlantResults({ apiParam }) {
       }
 
       const data = JSON.parse(textResponse); // Parse the JSON response
-      setPlants(data.data); // Set the fetched plants data to state
+      const updatedPlants = data.data.map((plant) => ({
+        ...plant,
+        fromCategorySearch, // Adding the flag to each plant item
+      }));
+      setPlants(updatedPlants); // Set the updated plants data to state
     } catch (error) {
       console.error("Failed to fetch plants:", error); // Log errors if the request fails
     }

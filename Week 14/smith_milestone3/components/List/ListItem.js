@@ -33,6 +33,7 @@ function ListItem({
   listIndex,
   fromImageSearch,
   images,
+  fromCategorySearch,
 }) {
   // console.log("List Item Plant ID: ", id);
 
@@ -53,6 +54,7 @@ function ListItem({
     description,
     fromImageSearch,
     images,
+    fromCategorySearch,
   };
 
   // Dynamically generate the description
@@ -75,7 +77,6 @@ function ListItem({
   //   fromImageSearch,
   //   images,
   // });
-  
 
   return (
     <View

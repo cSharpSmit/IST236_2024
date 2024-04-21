@@ -2,8 +2,20 @@ import { FlatList, StyleSheet } from "react-native";
 import PlantCategoryTile from "../components/CategoryGridTile";
 import PLANT_CATEGORIES from "../data/plant_data";
 import Colors from "../constants/colors";
+import { useLayoutEffect } from "react";
 
 function SearchPlantsByCategoryScreen({ navigation }) {
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      // title: plantOfTheDay?.common_name || "Plant of the Day",
+      headerStyle: styles.headerContainer,
+      headerTitleAlign: "center",
+      headerTitle: 'View By Category',
+      headerTitleStyle: styles.headerTitle,
+    });
+  }, [navigation]);
+
   const renderPlantCategoryItem = ({ item }) => (
     <PlantCategoryTile
       name={item.name}
@@ -33,6 +45,17 @@ function SearchPlantsByCategoryScreen({ navigation }) {
 export default SearchPlantsByCategoryScreen;
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    backgroundColor: Colors.accent900,
+  },
+  headerTitle: {
+    // backgroundColor: Colors.accent200,
+    color: Colors.accent200,
+    fontSize: 30,
+    fontFamily: "newsreader",
+    fontWeight: "bold",
+    color: Colors.accent200,
+  },
   flatList: {
     backgroundColor: Colors.primary300,
   },

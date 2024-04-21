@@ -23,27 +23,27 @@ export const PLANT_CATEGORIES = [
     "distributions/ang/plants?", // API Parameter, below is the image url
     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.andersonexpeditions.com%2Fwp-content%2Fuploads%2F2019%2F01%2Flaunching-niassa-and-angola.jpg&f=1&nofb=1&ipt=3b2e696b146f072282f21089257eb16165159c501992ac5068726fd54553dcab&ipo=images"
   ),
-  // new PlantCategory(
-  //   ,  // Id
-  //   "Yemen Plants", 
-  //   "Yemen Plants", 
-  //   "distributions/24/plants?", // It seems using the API distribution ID works as well, but it had duplicate results 
-  //   "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.andersonexpeditions.com%2Fwp-content%2Fuploads%2F2019%2F01%2Flaunching-niassa-and-angola.jpg&f=1&nofb=1&ipt=3b2e696b146f072282f21089257eb16165159c501992ac5068726fd54553dcab&ipo=images"
-  // ),
-  // new PlantCategory(
-  //   ,
-  //   "Tallest Trees",
-  //   "Tallest Trees",
-  //   "plants?filter_not%5Bmaximum_height_cm%5D=null&filter%5Bligneous_type%5D=tree&order%5Bmaximum_height_cm%5D=desc&",
-  //   "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fexternal-preview.redd.it%2FXlozuFcVl08ZgR0UNMBZ2kEPt8UVovry5bQVHTcRlb0.jpg%3Fauto%3Dwebp%26s%3D940caa481f7df563e5600ffd37b0e5c3b59ec756&f=1&nofb=1&ipt=6005147a95671be964efed0d9bc4d70923b5766e357b3ff855bbd211401a7c9c&ipo=images"
-  // ),
-  // new PlantCategory(
-  //   ,
-  //   "Succulents",
-  //   "",
-  //   "",
-  //   ""
-  // ),
+  new PlantCategory(
+    3,  // Id
+    "South Carolina Plants", 
+    "South Carolina Plants", 
+    "distributions/sca/plants?", // It seems using the API distribution ID works as well, but it had duplicate results 
+    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp3059441.jpg&f=1&nofb=1&ipt=439eb113b4a0bd715c634c6167eec4bd199414ee6616ca01dd75b6cea337fe20&ipo=images"
+  ),
+  new PlantCategory(
+    5,
+    "Christmas Island Plants",
+    "Christmas Island Plants",
+    "distributions/xms/plants?",
+    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.colbybrownphotography.com%2Fwp-content%2Fuploads%2F2015%2F05%2FLily-Beach-Cove-Christmas-Island.jpg&f=1&nofb=1&ipt=f749c0518fbc18fb8dbcbf0f4029728b53bfb70bc9ed46fcf7b6f17bc60df21c&ipo=images"
+  ),
+  new PlantCategory(
+    6,
+    "Japan Plants",
+    "Japan Plants",
+    "distributions/jap/plants?page=3&",
+    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.colbybrownphotography.com%2Fwp-content%2Fuploads%2F2015%2F05%2FLily-Beach-Cove-Christmas-Island.jpg&f=1&nofb=1&ipt=f749c0518fbc18fb8dbcbf0f4029728b53bfb70bc9ed46fcf7b6f17bc60df21c&ipo=images"
+  ),
   // new PlantCategory(
   //   ,
   //   "Cacti",
