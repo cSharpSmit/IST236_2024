@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
     paddingVertical: 10,
+    backgroundColor: "black"
   },
   headerContainer: {
     backgroundColor: Colors.accent900,

@@ -98,8 +98,18 @@ function List(props) {
 
   const links = props.links;
 
+  // Variable to check for hidden plants due to settings
+  const hiddenPlants = props.items.length > 0 && filteredData?.length === 0;
+
   return (
     <View style={styles.container}>
+      {hiddenPlants && (
+        <View style={styles.hiddenMessageContainer}>
+          <Text style={styles.hiddenMessage}>
+            Results found, but they are hidden due to your settings.
+          </Text>
+        </View>
+      )}
       {/* Display the result count only if it's not from search plants screen */}
       {shouldDisplayResultNumber && (
         <Text style={styles.resultNumber}>
@@ -228,6 +238,19 @@ const styles = StyleSheet.create({
     // paddingBottom: 0,
     backgroundColor: "black",
     borderRadius: 30,
+  },
+  hiddenMessageContainer: {
+    flex: 8,
+    // backgroundColor: "blue",
+    justifyContent: "center"
+  },
+  hiddenMessage: {
+    fontSize: 35,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "newsreader",
+    color: Colors.primary300,
+    opacity: 0.6,
   },
   resultNumber: {
     fontWeight: "bold",

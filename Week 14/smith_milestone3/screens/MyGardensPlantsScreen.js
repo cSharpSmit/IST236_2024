@@ -22,19 +22,23 @@ function MyGardensPlantsScreen() {
   if (myGardensPlants.length === 0) {
     return (
       <View style={styles.rootContainer}>
-        <Text style={styles.text}>
-          You have no plants in your garden yet...
-        </Text>
+        <View style={styles.messageContainer}>
+          <Text style={styles.text}>
+            You have no plants in your garden yet...
+          </Text>
+        </View>
       </View>
     );
   } else if (filteredGardenPlants.length === 0) {
     // If no plants are displayed because of the settings
     return (
       <View style={styles.rootContainer}>
-        <Text style={styles.text}>
-          You have plants in your garden, but they are hidden due to your
-          settings.
-        </Text>
+        <View style={styles.messageContainer}>
+          <Text style={styles.text}>
+            You have plants in your garden, but they are hidden due to your
+            settings.
+          </Text>
+        </View>
       </View>
     );
   } else {
@@ -55,6 +59,11 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "center",
     backgroundColor: "black",
+  },
+  messageContainer: {
+    flex: 1,
+    justifyContent: "center",
+    paddingBottom: "15%"
   },
   text: {
     fontSize: 35,
