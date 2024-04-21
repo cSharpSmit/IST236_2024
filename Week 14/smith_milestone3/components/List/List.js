@@ -50,7 +50,7 @@ function List(props) {
   // renderListItem function and return statement
   function renderListItem(filteredData) {
     // console.log(filteredData.item.imageUrl);
-    console.log("Filtered Data: ", filteredData);
+    // console.log("Filtered Data: ", filteredData);
 
     const plantItemProps = {
       id: filteredData.item.id,

@@ -1,5 +1,12 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import { View, Text, Button, StyleSheet, Alert, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Image,
+  Pressable,
+} from "react-native";
 import {
   launchImageLibraryAsync,
   launchCameraAsync,
@@ -10,9 +17,6 @@ import {
 import List from "../components/List/List";
 import Colors from "../constants/colors";
 
-// TODO: I could change the project from all to some
-// geographic relevance like north-america or add an option
-// in settings for using GPS, or all
 // NOTE: Apparently many absent results are
 // Come from certain request due to incomplete data sets
 // Used by the API.
@@ -171,9 +175,15 @@ function SearchPlantsByImageScreen(props) {
   return (
     <View style={styles.container}>
       {searchPerformed && (
-        <View style={styles.clearButtonContainer}>
-          <Button title="X" onPress={clearSearch} />
-        </View>
+        <Pressable
+          style={styles.clearButton}
+          android_ripple={{ color: Colors.accent900o5, foreground: true }}
+          onPress={clearSearch}
+        >
+          <View style={styles.clearButtonTextContainer}>
+            <Text style={styles.clearButtonText}>X</Text>
+          </View>
+        </Pressable>
       )}
       {imageUri && (
         <View style={styles.previewContainer}>
@@ -182,13 +192,34 @@ function SearchPlantsByImageScreen(props) {
       )}
       {!searchPerformed && (
         <View style={styles.buttonContainer}>
-          <Button title="Pick an Image from Gallery" onPress={pickImage} />
-          <Button title="Take a Photo" onPress={takePhoto} />
-          <Button
-            title="Identify Plant"
+          <Pressable
+            style={styles.button}
+            android_ripple={{ color: Colors.accent900o5, foreground: true }}
+            onPress={pickImage}
+          >
+            <View style={styles.buttonTextContainer}>
+              <Text style={styles.buttonText}>Pick an Image from Gallery</Text>
+            </View>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            android_ripple={{ color: Colors.accent900o5, foreground: true }}
+            onPress={takePhoto}
+          >
+            <View style={styles.buttonTextContainer}>
+              <Text style={styles.buttonText}>Take a Photo</Text>
+            </View>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            android_ripple={{ color: Colors.accent900o5, foreground: true }}
             onPress={identifyPlant}
             disabled={isLoading}
-          />
+          >
+            <View style={styles.buttonTextContainer}>
+              <Text style={styles.buttonText}>Identify Plant</Text>
+            </View>
+          </Pressable>
         </View>
       )}
       {isLoading ? (
@@ -224,24 +255,71 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.accent200,
   },
-  clearButtonContainer: {
+  // clearButtonContainer: {
+  //   position: "absolute",
+  //   top: 10, // Adjust the distance from the top
+  //   right: 10, // Position in the top-right corner
+  // },
+  clearButton: {
+    justifyContent: "center",
+    alignItems: "center",
     position: "absolute",
     top: 10, // Adjust the distance from the top
     right: 10, // Position in the top-right corner
+    borderWidth: 3,
+    borderColor: Colors.accent900,
+    backgroundColor: Colors.primary500,
+    borderRadius: 30,
+    width: "10%",
+    height: 40,
+    overflow: "hidden",
+  },
+  clearButtonTextContainer: {},
+  clearButtonText: {
+    fontSize: 16,
+    color: Colors.accent800,
+    fontFamily: "newsreader",
+    fontWeight: "bold",
   },
   previewContainer: {
     flexDirection: "row",
-    marginTop: 20,
+    marginTop: 10,
     alignItems: "center",
-    paddingBottom: 10,
+    marginBottom: 10,
+    padding: 5,
+    backgroundColor: Colors.accent900,
+    borderRadius: 6,
   },
   image: {
     width: 150,
     height: 150,
   },
   buttonContainer: {
-    paddingTop: 20,
+    flex: 1,
+    // paddingTop: 20,
     alignItems: "center",
+    // justifyContent: "center",
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: Colors.accent900,
+    backgroundColor: Colors.primary500,
+    borderRadius: 30,
+    width: "100%",
+    height: 60,
+    alignSelf: "center",
+    margin: 25,
+    overflow: "hidden",
+  },
+  buttonTextContainer: {},
+  buttonText: {
+    padding: 8,
+    fontSize: 24,
+    textAlign: "center",
+    color: Colors.accent800,
+    fontFamily: "newsreader",
   },
   resultContainer: {
     marginBottom: 20,

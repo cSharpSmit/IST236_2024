@@ -8,7 +8,6 @@ function SearchPlantsByCategoryScreen({ navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      // title: plantOfTheDay?.common_name || "Plant of the Day",
       headerStyle: styles.headerContainer,
       headerTitleAlign: "center",
       headerTitle: 'View By Category',
@@ -35,7 +34,7 @@ function SearchPlantsByCategoryScreen({ navigation }) {
       data={PLANT_CATEGORIES}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderPlantCategoryItem}
-      numColumns={2} // Adjust number of columns here if need later
+      numColumns={1} // Sets the number of columns (1 ended up looking better)
       style={styles.flatList}
     />
   );

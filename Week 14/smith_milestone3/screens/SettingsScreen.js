@@ -20,15 +20,29 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Show Plants with Images Only</Text>
+      <Text style={styles.text}>Show Plants with Images Only</Text>
       <Switch
         onValueChange={() => toggleSwitch("showImagesOnly")}
         value={settings.showImagesOnly}
+        thumbColor={
+          settings.showImagesOnly ? Colors.accent500 : Colors.primary800
+        }
+        trackColor={{
+          false: Colors.accent900,
+          true: Colors.primary800,
+        }}
       />
-      <Text>Show Plants with Common Names Only</Text>
+      <Text style={styles.text}>Show Plants with Common Names Only</Text>
       <Switch
         onValueChange={() => toggleSwitch("showCommonNamesOnly")}
         value={settings.showCommonNamesOnly}
+        thumbColor={
+          settings.showCommonNamesOnly ? Colors.accent500 : Colors.primary800
+        }
+        trackColor={{
+          false: Colors.accent900,
+          true: Colors.primary800,
+        }}
       />
       {/* TODO: Add more switches for other settings */}
     </View>
@@ -39,18 +53,18 @@ const SettingsScreen = () => {
 export default SettingsScreen;
 
 const styles = StyleSheet.create({
-  rootContainer: {
+  container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "black",
+    padding: 20,
   },
   text: {
-    fontSize: 35,
+    fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
+    // textAlign: "center",
     fontFamily: "newsreader",
     color: Colors.primary300,
-    opacity: 0.6,
   },
 });

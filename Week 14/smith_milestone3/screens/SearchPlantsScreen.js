@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect } from "react";
-import { View, TextInput, Button, Text, StyleSheet } from "react-native";
+import { View, TextInput, Text, StyleSheet, Pressable } from "react-native";
 import List from "../components/List/List";
 import Colors from "../constants/colors";
 
@@ -9,6 +9,8 @@ const SearchPlantScreen = (props) => {
   const [filteredCount, setFilteredCount] = useState(0); // State to store the filtered count
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Track if a search has been performed
+  const [links, setLinks] = useState(null);
+  const [meta, setMeta] = useState(null);
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -17,7 +19,7 @@ const SearchPlantScreen = (props) => {
       headerTitle: "Search Plants",
       headerTitleStyle: styles.headerTitle,
       // headerRight: () => (
-      //   <Button onPress={() => console.log('Header button pressed!')} title="Info" />
+      //   <Button onPress={() => console.log('Header button pressed')} title="Info" />
       // )
     });
   }, [props.navigation]);
@@ -33,11 +35,17 @@ const SearchPlantScreen = (props) => {
       );
       const data = await response.json();
 
+      setLinks(data.links); // Store the links information
+      setMeta(data.meta); // Store the meta information
+
       // Add the flag to indicate data source
       const plantsWithFlag = data.data.map((plant) => ({
         ...plant,
         fromSearchPlants: true, // Flag indicating data is from SearchPlantsScreen
       }));
+
+      console.log("Links: ", links);
+      console.log("Meta: ", meta);
 
       setPlants(plantsWithFlag);
     } catch (error) {
@@ -55,7 +63,15 @@ const SearchPlantScreen = (props) => {
         value={query}
         onChangeText={setQuery}
       />
-      <Button title="Search" onPress={searchPlants} />
+      <Pressable
+        style={styles.button}
+        android_ripple={{ color: Colors.accent900o5, foreground: true }}
+        onPress={searchPlants}
+      >
+        <View style={styles.buttonTextContainer}>
+          <Text style={styles.buttonText}>Search</Text>
+        </View>
+      </Pressable>
       {/* Show search count results */}
       {!isLoading && hasSearched && (
         <Text style={styles.resultCount}>{filteredCount} results found</Text>
@@ -67,7 +83,12 @@ const SearchPlantScreen = (props) => {
       {isLoading ? (
         <Text style={styles.centered}>Loading...</Text> // Show loading indicator or text
       ) : hasSearched && plants.length > 0 ? (
-        <List items={plants} onCountChange={setFilteredCount} /> // Render list of plants if there are results
+        <List
+          items={plants}
+          onCountChange={setFilteredCount}
+          links={links}
+          meta={meta}
+        /> // Render list of plants if there are results
       ) : hasSearched ? (
         <Text style={styles.centered}>No plants found.</Text> // Show no results message if search was performed
       ) : (
@@ -100,6 +121,27 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 5,
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: Colors.accent900,
+    backgroundColor: Colors.primary500,
+    borderRadius: 30,
+    width: "100%",
+    height: 60,
+    alignSelf: "center",
+    // margin: 10,
+    overflow: "hidden",
+  },
+  buttonTextContainer: {},
+  buttonText: {
+    padding: 8,
+    fontSize: 27,
+    textAlign: "center",
+    color: Colors.accent800,
+    fontFamily: "newsreader",
   },
   resultCount: {
     marginTop: 10,

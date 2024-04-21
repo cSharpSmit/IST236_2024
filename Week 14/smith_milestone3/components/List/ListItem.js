@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Colors from "../../constants/colors";
 
 // TODO: Update comments and allow component to be
 // Used with data from more than just the Trefle API
@@ -82,10 +83,14 @@ function ListItem({
     <View
       style={[
         styles.itemContainer,
-        { backgroundColor: listIndex % 2 === 0 ? "#ccc" : "#fff" },
+        { backgroundColor: listIndex % 2 === 0 ? Colors.accent900 : Colors.accent900o8 },
       ]}
     >
-      <Pressable onPress={selectedPlantHandler}>
+      <Pressable
+        style={styles.button}
+        android_ripple={{ color: Colors.accent900o5, foreground: true }}
+        onPress={selectedPlantHandler}
+      >
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: imageUrl }} />
         </View>

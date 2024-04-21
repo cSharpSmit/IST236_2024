@@ -14,8 +14,8 @@ function CategoryGridTile(props) {
   return (
     <View style={styles.gridItem}>
       <Pressable
-        style={({ pressed }) => [styles.button, pressed ? styles.buttonPressed : null]}
-        android_ripple={{ color: Colors.primary300 }}
+        style={styles.button}
+        android_ripple={{ color: Colors.accent900o5, foreground: true }}
         onPress={props.onPress}
       >
         <ImageBackground
@@ -25,26 +25,23 @@ function CategoryGridTile(props) {
         >
           <LinearGradient
             colors={[
-              Colors.primary800o5,  
+              Colors.primary800o5,
               "rgba(68, 83, 88, 0.1)",
               "rgba(68, 83, 88, 0.1)",
-              Colors.accent900,  
+              Colors.accent900,
               "rgba(68, 83, 88, 0.1)",
               "rgba(68, 83, 88, 0.1)",
-              Colors.primary800o5,  
+              Colors.primary800o5,
             ]}
             style={styles.innerContainer}
           >
-            <Text style={styles.name}>
-              {props.name}
-            </Text>
+            <Text style={styles.name}>{props.name}</Text>
           </LinearGradient>
         </ImageBackground>
       </Pressable>
     </View>
   );
 }
-
 
 // Exports the component for use in other parts of the app
 export default CategoryGridTile;
@@ -81,6 +78,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     fontFamily: "newsreader",
-    color: Colors.accent200
+    color: Colors.accent200,
   },
 });
