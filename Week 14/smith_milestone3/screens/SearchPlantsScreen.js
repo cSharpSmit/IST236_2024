@@ -11,6 +11,7 @@ const SearchPlantScreen = (props) => {
   const [hasSearched, setHasSearched] = useState(false); // Track if a search has been performed
   const [links, setLinks] = useState(null);
   const [meta, setMeta] = useState(null);
+  const [currentPage, setCurrentPage] = useState("page=1"); // Store the current page URL
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -24,14 +25,14 @@ const SearchPlantScreen = (props) => {
     });
   }, [props.navigation]);
 
-  const searchPlants = async () => {
+  const searchPlants = async (page) => {
     if (!query.trim()) return;
     setIsLoading(true);
     setHasSearched(true); // Set that user has initiated a search
 
     try {
       const response = await fetch(
-        `https://trefle.io/api/v1/plants/search?token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E&q=${query}`
+        `https://trefle.io/api/v1/plants/search?${page}&token=-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E&q=${query}`
       );
       const data = await response.json();
 
@@ -44,9 +45,6 @@ const SearchPlantScreen = (props) => {
         fromSearchPlants: true, // Flag indicating data is from SearchPlantsScreen
       }));
 
-      console.log("Links: ", links);
-      console.log("Meta: ", meta);
-
       setPlants(plantsWithFlag);
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -54,6 +52,21 @@ const SearchPlantScreen = (props) => {
       setIsLoading(false);
     }
   };
+
+  // Handle pagination changes
+  // const handlePageChange = (newPage) => {
+  //   setCurrentPage(newPage); // Update the current page
+  //   searchPlants(newPage); // Re-run the search with the new page
+  // };
+
+  const handlePageChange = (newPageLink) => {
+    const page = newPageLink.split("page=")[1]; // Extract the page number
+    setCurrentPage(`page=${page}`); // Set the current page in the correct format
+    searchPlants(`page=${page}`); // Trigger a search with the correct page
+  };
+
+  console.log("Links: ", links);
+  console.log("Meta: ", meta);
 
   return (
     <View style={styles.container}>
@@ -66,7 +79,8 @@ const SearchPlantScreen = (props) => {
       <Pressable
         style={styles.button}
         android_ripple={{ color: Colors.accent900o5, foreground: true }}
-        onPress={searchPlants}
+        // onPress={searchPlants}
+        onPress={() => searchPlants(currentPage)}
       >
         <View style={styles.buttonTextContainer}>
           <Text style={styles.buttonText}>Search</Text>
@@ -88,6 +102,7 @@ const SearchPlantScreen = (props) => {
           onCountChange={setFilteredCount}
           links={links}
           meta={meta}
+          onPageChange={handlePageChange}
         /> // Render list of plants if there are results
       ) : hasSearched ? (
         <Text style={styles.centered}>No plants found.</Text> // Show no results message if search was performed

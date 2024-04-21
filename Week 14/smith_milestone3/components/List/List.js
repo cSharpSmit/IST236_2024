@@ -1,7 +1,8 @@
-import { View, StyleSheet, FlatList, Text } from "react-native";
+import { View, StyleSheet, FlatList, Text, Pressable } from "react-native";
 import { useContext, useEffect } from "react";
 import ListItem from "./ListItem";
 import { SettingsContext } from "../../store/context/settings-context";
+import Colors from "../../constants/colors";
 
 // TODO: Ensure to refine the list to accept and manage
 // Plants from the Pl@nt API as well.
@@ -13,6 +14,22 @@ function List(props) {
   const { settings } = useContext(SettingsContext);
 
   // console.log("Show Image Only: ", settings.showImagesOnly);
+
+  // Function to get the page number from a link
+  function extractPageNumber(link) {
+    if (link) {
+      const matches = link.match(/page=(\d+)/);
+      return matches ? parseInt(matches[1], 10) : undefined; // Return the page number or undefined if not found
+    }
+    return undefined;
+  }
+
+  // Variable to hold the current page and last page numbers
+  const currentPage = extractPageNumber(props.links?.self) || 1;
+  const lastPage = extractPageNumber(props.links?.last) || 1;
+
+  // Condition to check if page information is available
+  const pageInfoAvailable = currentPage !== undefined && lastPage !== undefined;
 
   // Variable used to check for the correct image URL field
   function getImageUrl(item) {
@@ -79,6 +96,8 @@ function List(props) {
       item.fromSearchPlants === false || item.fromSearchPlants === undefined
   );
 
+  const links = props.links;
+
   return (
     <View style={styles.container}>
       {/* Display the result count only if it's not from search plants screen */}
@@ -93,6 +112,107 @@ function List(props) {
         renderItem={renderListItem}
         showsVerticalScrollIndicator={false}
       />
+      {/* Display pagination buttons based on links */}
+      {links && (
+        <View style={styles.pagination}>
+          {/* Disable first button if no first link or currentPage is 1 */}
+          <Pressable
+            style={[styles.button, currentPage <= 1 && styles.disabledButton]}
+            android_ripple={
+              currentPage > 1
+                ? { color: Colors.accent900o5, foreground: true }
+                : null
+            }
+            onPress={
+              currentPage > 1 ? () => props.onPageChange(links.first) : null
+            }
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                currentPage <= 1 && styles.disabledButton,
+              ]}
+            >
+              First
+            </Text>
+          </Pressable>
+          {/* Disable prev button if no prev link*/}
+          <Pressable
+            style={[styles.button, !links.prev && styles.disabledButton]}
+            android_ripple={
+              links.prev
+                ? { color: Colors.accent900o5, foreground: true }
+                : null
+            }
+            onPress={links.prev ? () => props.onPageChange(links.prev) : null}
+          >
+            <View style={styles.buttonTextContainer}>
+              <Text
+                style={[
+                  styles.buttonText,
+                  !links.prev && styles.disabledButton,
+                ]}
+              >
+                Prev
+              </Text>
+            </View>
+          </Pressable>
+
+          {/* Show page information if valid */}
+          {pageInfoAvailable && (
+            <Text style={styles.pageInfo}>
+              Page {currentPage} of {lastPage}
+            </Text>
+          )}
+
+          <Pressable
+            style={[styles.button, !links.next && styles.disabledButton]}
+            android_ripple={
+              links.next
+                ? { color: Colors.accent900o5, foreground: true }
+                : null
+            }
+            onPress={links.next ? () => props.onPageChange(links.next) : null}
+          >
+            <View style={styles.buttonTextContainer}>
+              <Text
+                style={[
+                  styles.buttonText,
+                  !links.next && styles.disabledButton,
+                ]}
+              >
+                Next
+              </Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            style={[
+              styles.button,
+              links.last && currentPage >= lastPage && styles.disabledButton,
+            ]}
+            android_ripple={
+              links.last && currentPage < lastPage
+                ? { color: Colors.accent900o5, foreground: true }
+                : null
+            }
+            onPress={
+              links.last && currentPage < lastPage
+                ? () => props.onPageChange(links.last)
+                : null
+            }
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                links.last && currentPage >= lastPage && styles.disabledButton,
+              ]}
+            >
+              Last
+            </Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 }
@@ -105,7 +225,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    // paddingBottom: 0,
     backgroundColor: "black",
+    borderRadius: 30,
   },
   resultNumber: {
     fontWeight: "bold",
@@ -113,5 +235,48 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     opacity: 0.1,
+  },
+  pagination: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    paddingBottom: 0,
+  },
+  pageInfo: {
+    color: Colors.primary800,
+    fontSize: 16,
+    alignSelf: "center",
+  },
+  // pageButton: {
+  //   color: "blue",
+  //   padding: 10,
+  //   textAlign: "center",
+  // },
+  disabledButton: {
+    // color: "black",
+    // borderColor: "black",
+    // backgroundColor: "black",
+    opacity: 0.6,
+  },
+  button: {
+    justifyContent: "center",
+    // alignItems: "center",
+    borderWidth: 3,
+    borderColor: Colors.accent900,
+    backgroundColor: Colors.primary500,
+    borderRadius: 30,
+    // width: "100%",
+    // height: 60,
+    // alignSelf: "center",
+    // margin: 10,
+    overflow: "hidden",
+  },
+  buttonTextContainer: {},
+  buttonText: {
+    padding: 8,
+    fontSize: 16,
+    textAlign: "center",
+    color: Colors.accent800,
+    fontFamily: "newsreader",
   },
 });

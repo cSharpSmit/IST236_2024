@@ -38,7 +38,11 @@ function MyGardensPlantsScreen() {
       </View>
     );
   } else {
-    return <List items={filteredGardenPlants} />;
+    return (
+      <View style={styles.rootContainer}>
+        <List items={filteredGardenPlants} />
+      </View>
+    );
   }
 }
 
@@ -48,8 +52,8 @@ export default MyGardensPlantsScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "black",
   },
   text: {

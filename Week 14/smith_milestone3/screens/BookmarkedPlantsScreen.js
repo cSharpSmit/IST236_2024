@@ -35,7 +35,11 @@ function BookmarkedPlantsScreen() {
       </View>
     );
   } else {
-    return <List items={filteredBookmarkedPlants} />; // Display filtered list
+    return (
+      <View style={styles.rootContainer}>
+        <List items={filteredBookmarkedPlants} />
+      </View>
+    ); // Display filtered list
   }
 }
 
@@ -45,8 +49,8 @@ export default BookmarkedPlantsScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "black",
   },
   text: {
