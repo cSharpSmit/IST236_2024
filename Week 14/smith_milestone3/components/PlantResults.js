@@ -19,12 +19,9 @@ function PlantResults({ apiParam, fromCategorySearch = false }) {
     const apiKey = "-OwqHXlJ7XS8liuQNOkDcH4UrCFC_EoSJbT7r6_Xd6E"; // Trefle API key
     const url = `https://trefle.io/api/v1/${apiParam}${page}&token=${apiKey}`; // Construct the API URL
 
-    console.log("Requesting URL:", url); // Log the request URL to debug it
     try {
       const response = await fetch(url); // Make the HTTP request
       const textResponse = await response.text(); // Get the response as text
-
-      console.log("Raw API Response:", textResponse); // Log the raw response for debugging
 
       if (!response.ok) {
         throw new Error(

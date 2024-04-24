@@ -8,7 +8,6 @@ import { MyGardenContext } from "../store/context/my-garden-context";
 import Swiper from "react-native-swiper";
 
 function PlantDetailScreen(props) {
-  // console.log("Plant Detail: ", props.route.params);
 
   // Component setup, including state, effects, and layout definitions
   const { bookmarkedPlants, addFavorite, removeFavorite } =
@@ -16,10 +15,8 @@ function PlantDetailScreen(props) {
   const { myGardensPlants, addToGarden, removeFromGarden } =
     useContext(MyGardenContext);
 
-  // Gets the entire plant object as a route param (May need to adjust)
+  // Gets the entire plant object as a route param
   const plant = props.route.params.plant;
-
-  // console.log("Selected Plant: ", props.route.params.plant);
 
   // Determine if the plant is bookmarked
   const plantIsBookmarked = bookmarkedPlants.some(
@@ -70,9 +67,6 @@ function PlantDetailScreen(props) {
 
   return (
     <View style={styles.rootContainer}>
-      {/* <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: plant.imageUrl }} />
-      </View> */}
       {/* Conditional rendering based on the presence of multiple images */}
       {plant.images && plant.images.length ? (
         <Swiper
@@ -81,14 +75,14 @@ function PlantDetailScreen(props) {
           nextButton={<Text style={{ color: Colors.accent800, fontSize: 30 }}>›</Text>}
           prevButton={<Text style={{ color: Colors.accent800, fontSize: 30 }}>‹</Text>}
           dotStyle={{
-            backgroundColor: Colors.accent800o7, // Semi-transparent blue for inactive dots
+            backgroundColor: Colors.accent800o7,
             width: 8,
             height: 8,
             borderRadius: 4,
             marginHorizontal: 4,
           }}
           activeDotStyle={{
-            backgroundColor: Colors.accent800, // Bright green for active dot
+            backgroundColor: Colors.accent800,
             width: 12,
             height: 12,
             borderRadius: 6,

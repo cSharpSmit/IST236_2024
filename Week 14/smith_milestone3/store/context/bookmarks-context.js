@@ -18,7 +18,6 @@ function BookmarksContextProvider({ children }) {
         const plants = JSON.parse(storedPlants);
         setBookmarkedPlants(plants);
         setBookmarkedPlants(JSON.parse(storedPlants));
-        // console.log('Loaded bookmarked plants:', plants); // Log the retrieved list
       }
     };
 
@@ -32,7 +31,6 @@ function BookmarksContextProvider({ children }) {
       "bookmarkedPlants",
       JSON.stringify(newBookmarkedPlants)
     );
-    // console.log("Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
   };
 
   const removeFavoriteBookmark = async (plantId) => {
@@ -44,7 +42,6 @@ function BookmarksContextProvider({ children }) {
       "bookmarkedPlants",
       JSON.stringify(newBookmarkedPlants)
     );
-    // console.log("Remove Bookmarked plants updated:", newBookmarkedPlants); // Log the updated list
   };
 
   const value = {

@@ -5,8 +5,8 @@ import Colors from "../constants/colors";
 
 // NOTE: This page was an after thought considering
 // How many results had incomplete data.
-// TODO: Ensure settings take effect for every screen.
-// Unless its for a certain screen.
+// The home page will still disregard settings, this is
+// on purpose.
 
 const SettingsScreen = () => {
   const { settings, saveSettings } = useContext(SettingsContext);
@@ -44,7 +44,6 @@ const SettingsScreen = () => {
           true: Colors.primary800,
         }}
       />
-      {/* TODO: Add more switches for other settings */}
     </View>
   );
 };

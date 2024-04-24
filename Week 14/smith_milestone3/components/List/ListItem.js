@@ -18,6 +18,7 @@ import Colors from "../../constants/colors";
  * - scientificName: Scientific name of the plant.
  * - description: A brief description of the plant.
  * - listIndex: Index of the plant item in the list, used for alternate background colors.
+ * - Etc.
  *
  * When pressed, the component navigates to the detailed view of the plant.
  * The listIndex prop is used to style every other item with a different background.
@@ -36,10 +37,6 @@ function ListItem({
   images,
   fromCategorySearch,
 }) {
-  // console.log("List Item Plant ID: ", id);
-
-  // console.log("List Item Plant Common Name: ", commonName);
-
   // Component logic and return statement
   const navigation = useNavigation();
 
@@ -71,13 +68,6 @@ function ListItem({
   function selectedPlantHandler() {
     navigation.navigate("PlantsDetail", { plant: plantObject });
   }
-
-  // console.log("ListItem Props:", {
-  //   id,
-  //   listIndex,
-  //   fromImageSearch,
-  //   images,
-  // });
 
   return (
     <View

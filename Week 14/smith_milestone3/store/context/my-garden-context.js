@@ -17,8 +17,6 @@ function MyGardenContextProvider({ children }) {
       if (storedPlants) {
         const plants = JSON.parse(storedPlants);
         setMyGardensPlants(plants);
-        // setMyGardensPlants(JSON.parse(storedPlants));
-        // console.log('Loaded myGardensPlants plants:', plants); // Log the retrieved list
       }
     };
 
@@ -32,7 +30,6 @@ function MyGardenContextProvider({ children }) {
       "myGardensPlants",
       JSON.stringify(newGardenPlants)
     );
-    // console.log("Garden updated:", newGardenPlants); // Log the updated list
   };
 
   const removePlantFromGarden = async (plantId) => {
@@ -44,7 +41,6 @@ function MyGardenContextProvider({ children }) {
       "myGardensPlants",
       JSON.stringify(newGardenPlants)
     );
-    // console.log("Remove from Garden updated:", newGardenPlants); // Log the updated list
   };
 
   const value = {

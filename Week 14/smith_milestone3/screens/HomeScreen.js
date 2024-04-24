@@ -14,7 +14,6 @@ import AddToGardenButton from "../components/AddToGardenButton";
 import { MyGardenContext } from "../store/context/my-garden-context";
 
 const HomeScreen = (props) => {
-  // console.log(props.route);
   const [plantOfTheDay, setPlantOfTheDay] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { bookmarkedPlants, addFavorite, removeFavorite } =
@@ -86,7 +85,6 @@ const HomeScreen = (props) => {
   // Dynamically setting the navigation options
   useLayoutEffect(() => {
     props.navigation.setOptions({
-      // title: plantOfTheDay?.common_name || "Plant of the Day",
       headerStyle: styles.headerContainer,
       headerTitleAlign: "center",
       headerTitle: "Plant of the Day",
@@ -117,6 +115,7 @@ const HomeScreen = (props) => {
     );
   }
 
+  // Builds a description dynamically based off available information
   const plantDescription = (plantOfTheDay) => {
     let description = `Discover today's featured plant: `;
 
@@ -171,7 +170,6 @@ const HomeScreen = (props) => {
           </Text>
         </View>
       </ScrollView>
-      {/* TODO: Include more details */}
     </View>
   );
 };

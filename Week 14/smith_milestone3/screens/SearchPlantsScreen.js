@@ -19,16 +19,15 @@ const SearchPlantScreen = (props) => {
       headerTitleAlign: "center",
       headerTitle: "Search Plants",
       headerTitleStyle: styles.headerTitle,
-      // headerRight: () => (
-      //   <Button onPress={() => console.log('Header button pressed')} title="Info" />
-      // )
     });
   }, [props.navigation]);
 
-  const searchPlants = async (page) => {
+  const searchPlants = async (page = "page=1") => {
     if (!query.trim()) return;
     setIsLoading(true);
     setHasSearched(true); // Set that user has initiated a search
+    // Ensure currentPage is reset on new search when just using "page" it didnt work
+    setCurrentPage("page=1"); 
 
     try {
       const response = await fetch(
@@ -36,16 +35,20 @@ const SearchPlantScreen = (props) => {
       );
       const data = await response.json();
 
-      setLinks(data.links); // Store the links information
-      setMeta(data.meta); // Store the meta information
+      if (data.data) {
+        setLinks(data.links); // Store the links information
+        setMeta(data.meta); // Store the meta information
 
-      // Add the flag to indicate data source
-      const plantsWithFlag = data.data.map((plant) => ({
-        ...plant,
-        fromSearchPlants: true, // Flag indicating data is from SearchPlantsScreen
-      }));
+        // Add the flag to indicate data source
+        const plantsWithFlag = data.data?.map((plant) => ({
+          ...plant,
+          fromSearchPlants: true, // Flag indicating data is from SearchPlantsScreen
+        }));
 
-      setPlants(plantsWithFlag);
+        setPlants(plantsWithFlag);
+      } else {
+        setPlants([]); // If no data, clear plants
+      }
     } catch (error) {
       console.error("Error fetching search results:", error);
     } finally {
@@ -53,20 +56,11 @@ const SearchPlantScreen = (props) => {
     }
   };
 
-  // Handle pagination changes
-  // const handlePageChange = (newPage) => {
-  //   setCurrentPage(newPage); // Update the current page
-  //   searchPlants(newPage); // Re-run the search with the new page
-  // };
-
   const handlePageChange = (newPageLink) => {
     const page = newPageLink.split("page=")[1]; // Extract the page number
     setCurrentPage(`page=${page}`); // Set the current page in the correct format
     searchPlants(`page=${page}`); // Trigger a search with the correct page
   };
-
-  console.log("Links: ", links);
-  console.log("Meta: ", meta);
 
   return (
     <View style={styles.container}>
@@ -79,7 +73,6 @@ const SearchPlantScreen = (props) => {
       <Pressable
         style={styles.button}
         android_ripple={{ color: Colors.accent900o5, foreground: true }}
-        // onPress={searchPlants}
         onPress={() => searchPlants(currentPage)}
       >
         <View style={styles.buttonTextContainer}>
@@ -90,8 +83,6 @@ const SearchPlantScreen = (props) => {
       {!isLoading && hasSearched && (
         <Text style={styles.resultCount}>{filteredCount} results found</Text>
       )}
-
-      {/* Could show a loading indicator here */}
 
       {/* Conditional rendering based on search results and loading state */}
       {isLoading ? (

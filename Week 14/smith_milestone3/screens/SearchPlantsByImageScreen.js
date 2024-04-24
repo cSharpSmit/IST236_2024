@@ -37,9 +37,6 @@ function SearchPlantsByImageScreen(props) {
       headerTitleAlign: "center",
       headerTitle: "Search By Image",
       headerTitleStyle: styles.headerTitle,
-      // headerRight: () => (
-      //   <Button onPress={() => console.log('Header button pressed!')} title="Info" />
-      // )
     });
   }, [props.navigation]);
 
@@ -64,13 +61,10 @@ function SearchPlantsByImageScreen(props) {
       quality: 1,
     });
 
-    // console.log("Image Selected: ", result);
-
     if (!result.canceled && result.assets && result.assets.length > 0) {
       // Accessing the first item in the assets array to get the uri
       const uri = result.assets[0].uri;
       setImageUri(uri);
-      // console.log("Image Set: ", uri);
     } else {
       console.log("No image selected or image selection was canceled.");
     }
@@ -88,8 +82,6 @@ function SearchPlantsByImageScreen(props) {
     }
   }
 
-  // console.log("Selected Image URI: ", imageUri);
-
   async function identifyPlant() {
     if (!imageUri) {
       Alert.alert("No Image", "Please select or capture an image first!");
@@ -104,7 +96,7 @@ function SearchPlantsByImageScreen(props) {
     });
     formData.append("organs", "flower");
 
-    // ^^ TODO: Organs associated to images ^^
+    // ^^ Organs associated to images ^^
     // (must contains one of: leaf, flower, fruit, bark, auto. Could contains: habit, other)
     // [max 5 organs and organs.length must be equal to images.length]
 
@@ -126,7 +118,6 @@ function SearchPlantsByImageScreen(props) {
       );
 
       const textResponse = await response.text(); // First gets the response as text
-      // console.log("Raw API Response:", textResponse); // Logs the raw response text
 
       const result = JSON.parse(textResponse); // Parses the JSON response
 
@@ -138,11 +129,8 @@ function SearchPlantsByImageScreen(props) {
         );
       }
 
-      console.log("API Response:", result); // Log the full response from the API
       setPlantInfo(
         result.results.map((item, index) => {
-          console.log("Processing Images:", item.images);
-          console.log("Processing Species:", item.species);
           return {
             id: `${index}`, // Ensure unique id
             imageUrl: item.images?.[0]?.url.m, // Medium size image
@@ -255,17 +243,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.accent200,
   },
-  // clearButtonContainer: {
-  //   position: "absolute",
-  //   top: 10, // Adjust the distance from the top
-  //   right: 10, // Position in the top-right corner
-  // },
   clearButton: {
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: 10, // Adjust the distance from the top
-    right: 10, // Position in the top-right corner
+    top: 10, 
+    right: 10,
     borderWidth: 3,
     borderColor: Colors.accent900,
     backgroundColor: Colors.primary500,
